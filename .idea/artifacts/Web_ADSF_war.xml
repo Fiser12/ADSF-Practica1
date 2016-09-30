@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Web-ADSF:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="webFiserASF-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Web-ADSF:war exploded" />
+    </root>
+  </artifact>
+</component>

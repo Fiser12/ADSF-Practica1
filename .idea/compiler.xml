@@ -22,11 +22,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Web-ADSF" />
+        <module name="Cliente" />
+        <module name="Server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Web-ADSF" target="1.5" />
+      <module name="Cliente" target="1.5" />
+      <module name="Server" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,43 +1,68 @@
 package Server.Model;
 
-/**
- * Created by Fiser on 9/10/16.
- */
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "habitacion")
 public class Habitacion implements java.io.Serializable {
-    private String ID;
-    private int planta;
-    private String tipoHabitacion;
 
-    public Habitacion() {
-    }
+	private Integer habitacionID;
+	private int planta;
+	private String tipoHabitacion;
+	private Set<HabitacionReserva> habitacionReservas = new HashSet<HabitacionReserva>(0);
 
-    public Habitacion(String ID, int planta, String tipoHabitacion) {
-        this.ID = ID;
-        this.planta = planta;
-        this.tipoHabitacion = tipoHabitacion;
-    }
+	public Habitacion() {
+	}
 
-    public String getID() {
-        return ID;
-    }
+	public Habitacion(Integer ID, int planta, String tipoHabitacion) {
+		this.habitacionID = ID;
+		this.planta = planta;
+		this.tipoHabitacion = tipoHabitacion;
+	}
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "HABITACION_ID", unique = true, nullable = false)
+	public Integer getHabitacionID() {
+		return this.habitacionID;
+	}
 
-    public int getPlanta() {
-        return planta;
-    }
+	public void setHabitacionID(Integer habitacionID) {
+		this.habitacionID = habitacionID;
+	}
 
-    public void setPlanta(int planta) {
-        this.planta = planta;
-    }
+	public int getPlanta() {
+		return planta;
+	}
 
-    public String getTipoHabitacion() {
-        return tipoHabitacion;
-    }
+	public void setPlanta(int planta) {
+		this.planta = planta;
+	}
 
-    public void setTipoHabitacion(String tipoHabitacion) {
-        this.tipoHabitacion = tipoHabitacion;
-    }
+	public String getTipoHabitacion() {
+		return tipoHabitacion;
+	}
+
+	public void setTipoHabitacion(String tipoHabitacion) {
+		this.tipoHabitacion = tipoHabitacion;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.habitacion")
+	public Set<HabitacionReserva> getHabitacionReservas() {
+		return this.habitacionReservas;
+	}
+	public void setHabitacionReservas(Set<HabitacionReserva> habitacionReservas) {
+		this.habitacionReservas = habitacionReservas;
+	}
+
 }

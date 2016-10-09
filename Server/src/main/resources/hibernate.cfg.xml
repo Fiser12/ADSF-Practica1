@@ -13,9 +13,9 @@
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
-    	<mapping class="Server.Model.Stock" />
-    	<mapping class="Server.Model.Category" />
-    	<mapping class="Server.Model.StockCategory" />
-    	<mapping class="Server.Model.StockCategoryId" />
+    	<mapping class="Server.Model.Habitacion" />
+    	<mapping class="Server.Model.Reserva" />
+    	<mapping class="Server.Model.HabitacionReserva" />
+    	<mapping class="Server.Model.HabitacionReservaId" />
 	</session-factory>
 </hibernate-configuration>

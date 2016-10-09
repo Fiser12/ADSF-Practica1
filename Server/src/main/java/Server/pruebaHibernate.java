@@ -2,9 +2,9 @@ package Server;
 
 import java.util.Date;
 import org.hibernate.Session;
-import Server.Model.Category;
-import Server.Model.Stock;
-import Server.Model.StockCategory;
+import Server.Model.Habitacion;
+import Server.Model.Reserva;
+import Server.Model.HabitacionReserva;
 
 public class pruebaHibernate {
     public static void main(String[] args) {
@@ -13,25 +13,24 @@ public class pruebaHibernate {
 
         session.beginTransaction();
 
-        Stock stock = new Stock();
-        stock.setStockCode("7052");
-        stock.setStockName("PADINI");
+        Habitacion stock = new Habitacion();
+        stock.setPlanta(12);
+        stock.setTipoHabitacion("PADINI");
 
-        Category category1 = new Category("CONSUMER", "CONSUMER COMPANY");
+        Reserva category1 = new Reserva();
         //new category, need save to get the id first
         session.save(category1);
 
         //Category category1 = (Category)session.get(Category.class, 8);
 
-        StockCategory stockCategory = new StockCategory();
+        HabitacionReserva stockCategory = new HabitacionReserva();
 
-        stockCategory.setStock(stock);
-        stockCategory.setCategory(category1);
-        stockCategory.setCreatedDate(new Date());
+        stockCategory.setHabitacion(stock);
+        stockCategory.setReserva(category1);
+        stockCategory.setStartDate(new Date());
+        stockCategory.setEndDate(new Date());
         stockCategory.setCreatedBy("system");
-
-        stock.getStockCategories().add(stockCategory);
-
+        stock.getHabitacionReservas().add(stockCategory);
         session.save(stock);
 
         session.getTransaction().commit();

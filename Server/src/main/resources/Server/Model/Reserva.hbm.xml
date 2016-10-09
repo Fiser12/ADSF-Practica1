@@ -3,9 +3,9 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="Server.Model.Reserva" table="reserva" >
-        <id name="ID" type="string">
-            <column name="Reserva_ID"/>
-            <generator class="identity"/>
+        <id name="reservaId" type="java.lang.Integer">
+            <column name="RESERVA_ID" />
+            <generator class="identity" />
         </id>
         <property name="nombre" type="string">
             <column name="nombre" length="10" not-null="true" unique="true"/>
@@ -34,5 +34,11 @@
         <property name="endTime" type="date">
             <column name="End_Date" length="10" not-null="true" />
         </property>
+        <set name="habitacionReservas" table="habitacion_reservas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pk.reserva" not-null="true" />
+            </key>
+            <one-to-many class="Server.Model.HabitacionReserva" />
+        </set>
     </class>
 </hibernate-mapping>

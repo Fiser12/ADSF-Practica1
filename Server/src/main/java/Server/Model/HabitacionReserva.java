@@ -14,54 +14,65 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "stock_category")
+@Table(name = "habitacion_reserva")
 @AssociationOverrides({
-		@AssociationOverride(name = "pk.stock", joinColumns = @JoinColumn(name = "STOCK_ID")),
-		@AssociationOverride(name = "pk.category", joinColumns = @JoinColumn(name = "CATEGORY_ID")) })
-public class StockCategory implements java.io.Serializable {
+		@AssociationOverride(name = "pk.habitacion", joinColumns = @JoinColumn(name = "HABITACION_ID")),
+		@AssociationOverride(name = "pk.reserva", joinColumns = @JoinColumn(name = "RESERVA_ID")) })
+public class HabitacionReserva implements java.io.Serializable {
 
-	private StockCategoryId pk = new StockCategoryId();
-	private Date createdDate;
+	private HabitacionReservaId pk = new HabitacionReservaId();
+	private Date startDate;
+	private Date endDate;
 	private String createdBy;
 
-	public StockCategory() {
+	public HabitacionReserva() {
 	}
 
 	@EmbeddedId
-	public StockCategoryId getPk() {
+	public HabitacionReservaId getPk() {
 		return pk;
 	}
 
-	public void setPk(StockCategoryId pk) {
+	public void setPk(HabitacionReservaId pk) {
 		this.pk = pk;
 	}
 
 	@Transient
-	public Stock getStock() {
-		return getPk().getStock();
+	public Habitacion getHabitacion() {
+		return getPk().getHabitacion();
 	}
 
-	public void setStock(Stock stock) {
-		getPk().setStock(stock);
+	public void setHabitacion(Habitacion habitacion) {
+		getPk().setHabitacion(habitacion);
 	}
 
 	@Transient
-	public Category getCategory() {
-		return getPk().getCategory();
+	public Reserva getReserva() {
+		return getPk().getReserva();
 	}
 
-	public void setCategory(Category category) {
-		getPk().setCategory(category);
+	public void setReserva(Reserva reserva) {
+		getPk().setReserva(reserva);
 	}
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE", nullable = false, length = 10)
-	public Date getCreatedDate() {
-		return this.createdDate;
+	public Date getStartDate() {
+		return this.startDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "END_DATE", nullable = false, length = 10)
+	public Date getEndDate() {
+		return this.endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	@Column(name = "CREATED_BY", nullable = false, length = 10)
@@ -79,7 +90,7 @@ public class StockCategory implements java.io.Serializable {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		StockCategory that = (StockCategory) o;
+		HabitacionReserva that = (HabitacionReserva) o;
 
 		if (getPk() != null ? !getPk().equals(that.getPk())
 				: that.getPk() != null)

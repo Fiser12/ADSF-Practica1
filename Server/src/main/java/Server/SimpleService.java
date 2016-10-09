@@ -24,4 +24,5 @@ public class SimpleService {
     public String  helloService(){
         return "Hello ";
     }
+
 }

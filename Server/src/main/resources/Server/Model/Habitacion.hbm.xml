@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Server.Model.Habitacion" table="habitacion">
+        <id name="ID" type="string">
+            <column name="Habitacion_ID"/>
+            <generator class="identity"/>
+        </id>
+        <property name="planta" type="java.lang.Integer">
+            <column name="planta" length="10" not-null="true"/>
+        </property>
+        <property name="tipoHabitacion" type="string">
+            <column name="tipoHabitacion" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

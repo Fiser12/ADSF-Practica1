@@ -24,25 +24,4 @@ public class SimpleService {
     public String  helloService(){
         return "Hello ";
     }
-   public Terminal obtenerTerminal(String idTerminal){
-        return new Terminal(1, "Apple", "iPhone 7 128 Gigas", 869);
-    }
-    public Terminal[] obtenerTerminales(){
-        Terminal [] terminales = { new Terminal(1, "Apple", "iPhone 7 128 Gigas", 869), new Terminal(1, "Apple", "iPhone 7 32 Gigas", 749), new Terminal(1, "Nexus", "Nexus 5X", 400)};
-
-        return terminales;
-    }
-    public Terminal[] obtenerTerminalesPorMarca(String marca){
-        Terminal [] terminales = { new Terminal(1, "Apple", "iPhone 7 128 Gigas", 869), new Terminal(1, "Apple", "iPhone 7 128 Gigas", 869)};
-        return terminales;
-    }
-    public boolean insertarTerminal(Terminal terminal){
-        return true;
-    }
-    public boolean actualizarTerminal(String idTerminal, Terminal terminal){
-        return true;
-    }
-    public boolean borrarTerminal(String idTerminal){
-        return true;
-    }
 }

@@ -2,29 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7e28ab6-bc5d-4fff-9f5d-152a310f056c" name="Default" comment="Hibernate añadido, pero aun no va">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources/be56fb74-9304-4b9e-996d-3e904f76ce47.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_0_9_28.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_0_9_28.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javassist_javassist_3_12_1_GA.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_jta_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_8_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_14.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_commons_annotations_3_2_0_Final.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_3_6_3_Final.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_javax_persistence_hibernate_jpa_2_0_api_1_0_0_Final.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_5_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cliente/.classpath" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cliente/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cliente/.project" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cliente/.settings/org.eclipse.jdt.core.prefs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Cliente/.settings/org.eclipse.m2e.core.prefs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/Server_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Server_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/main/java/Server/HibernateUtil.java" afterPath="$PROJECT_DIR$/Server/src/main/java/Server/HibernateUtil.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/main/resources/Server/Model/Category.hbm.xml" afterPath="$PROJECT_DIR$/Server/src/main/resources/Server/Model/Category.hbm.xml" />
@@ -978,7 +955,7 @@
       <workItem from="1475578078856" duration="3133000" />
       <workItem from="1475763479872" duration="21000" />
       <workItem from="1475968693084" duration="659000" />
-      <workItem from="1475970439733" duration="3955000" />
+      <workItem from="1475970439733" duration="3991000" />
     </task>
     <task id="LOCAL-00001" summary="Hibernate añadido, pero aun no va">
       <created>1475975468152</created>
@@ -987,11 +964,18 @@
       <option name="project" value="LOCAL" />
       <updated>1475975468152</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Hibernate añadido, pero aun no va">
+      <created>1475975513054</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1475975513054</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13496000" />
+    <option name="totallyTimeSpent" value="13532000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />

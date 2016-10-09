@@ -12,5 +12,16 @@
       <introspection-scope>ASF_Hotel:</introspection-scope>
       <resolve-scope>ASF_Hotel:</resolve-scope>
     </data-source>
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="b7e90a4e-c726-4971-b5b0-5707fb3528a8">
+      <database-info product="MySQL" version="5.7.15" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper" />
+      <user-name>root</user-name>
+      <user-password>df9bdfcbdf98dfcbdf99dfcbdf9edfcbdf86</user-password>
+      <introspection-scope>ASF_Hotel:</introspection-scope>
+      <resolve-scope>ASF_Hotel:</resolve-scope>
+    </data-source>
   </component>
 </project>

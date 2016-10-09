@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.hbm2ddl">create-drop</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ASF_Hotel</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">1a2a3a4a,</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
-        <mapping resource="Server/Model/Reserva.hbm.xml"/>
-        <mapping resource="Server/Model/Habitacion.hbm.xml"/>
-    </session-factory>
+	<session-factory>
+	 	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ASF_Hotel</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">1a2a3a4a,</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+    	<mapping class="Server.Model.Stock" />
+    	<mapping class="Server.Model.Category" />
+    	<mapping class="Server.Model.StockCategory" />
+    	<mapping class="Server.Model.StockCategoryId" />
+	</session-factory>
 </hibernate-configuration>

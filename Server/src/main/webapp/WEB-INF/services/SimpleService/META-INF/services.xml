@@ -21,28 +21,8 @@
 
 <serviceGroup>
 	<service name="SimpleService">
+		<messageReceiver mep="http://w3.org/ns/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+		<messageReceiver mep="http://w3.org/ns/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 		<parameter name="ServiceClass">Server.SimpleService</parameter>
-		<operation name="helloService">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="obtenerTerminal">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="obtenerTerminales">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="obtenerTerminalesPorMarca">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="insertarTerminal">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="actualizarTerminal">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-		<operation name="borrarTerminal">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-
 	</service>
 </serviceGroup>

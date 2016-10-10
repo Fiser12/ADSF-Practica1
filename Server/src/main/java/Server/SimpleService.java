@@ -19,10 +19,39 @@
 
 package Server;
 
+import Server.Model.Habitacion;
+import Server.Model.HabitacionReserva;
+import Server.Model.Reserva;
+
+import java.util.Date;
+
 public class SimpleService {
     
     public String  helloService(){
         return "Hello ";
     }
-
+    public Reserva[] listadoReserva(){
+        return null;
+    }
+    public Reserva getReserva(int id){
+        return null;
+    }
+    public boolean updateReserva(Reserva reserva){
+        return false;
+    }
+    public boolean createReserva(Reserva reserva){
+        return false;
+    }
+    public boolean deleteReserva(int id){
+        return false;
+    }
+    public Habitacion getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
+        return null;
+    }
+    public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
+        return false;
+    }
+    public boolean desasignarHabitacion(int idReserva, int idHabitacion){
+        return false;
+    }
 }

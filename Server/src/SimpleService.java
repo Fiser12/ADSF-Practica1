@@ -21,8 +21,12 @@
 import model.Habitacion;
 import model.HabitacionReserva;
 import model.Reserva;
-
 import java.util.Date;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class SimpleService {
     
@@ -30,27 +34,99 @@ public class SimpleService {
         return "Hello ";
     }
     public Reserva[] listadoReserva(){
-        return null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<Reserva> list = session.createCriteria(Reserva.class).list();
+        Reserva[] array = new Reserva[list.size()];
+        return list.toArray(array);
     }
     public Reserva getReserva(int id){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<Reserva> list = session.createCriteria(Reserva.class).list();
+        for (Reserva reserva: list) {
+        	if(reserva.getReservaId().equals(new Integer(id))){
+        		return reserva;
+        	}
+        }
         return null;
     }
     public boolean updateReserva(Reserva reserva){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try{
+	        tx = session.beginTransaction();
+	        List<Reserva> list = session.createCriteria(Reserva.class).list();
+	        for (Reserva reservaTemp: list) {
+	        	if(reservaTemp.getReservaId().equals(reserva.getReservaId())){
+	        		reservaTemp.setApellidos(reserva.getApellidos());
+	        		reservaTemp.setEndTime(reserva.getEndTime());
+	        		reservaTemp.setStartTime(reserva.getStartTime());
+	        		reservaTemp.setNombre(reserva.getNombre());
+	        		reservaTemp.setNumeroPersonas(reserva.getNumeroPersonas());
+	        		reservaTemp.setTelefono(reserva.getTelefono());
+	        		reservaTemp.setPagado(reserva.getPagado());
+	        		reservaTemp.setPrecio(reserva.getPrecio());
+	        		reservaTemp.setTipoReserva(reserva.getTipoReserva());
+	                session.update(reservaTemp); 
+	                tx.commit();
+	                return true;
+	        	}
+	        }
+	    }catch (HibernateException e) {
+	        return false;
+	    }finally {
+	        session.close(); 
+	    }
         return false;
     }
     public boolean createReserva(Reserva reserva){
-        return false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try{
+	        session.beginTransaction();
+	        session.save(reserva);
+	        session.getTransaction().commit();
+	    }catch (HibernateException e) {
+	        return false;
+	    }finally {
+	        session.close(); 
+	    }
+        return true;
     }
     public boolean deleteReserva(int id){
-        return false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Reserva reserva = (Reserva)session.load(Reserva.class,id);
+        session.delete(reserva);
+        session.flush() ;
+        return true;
     }
     public Habitacion getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
         return null;
     }
     public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
-        return false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try{
+	        session.beginTransaction();
+	        session.save(habitacionReserva);
+	        session.getTransaction().commit();
+	    }catch (HibernateException e) {
+	        return false;
+	    }finally {
+	        session.close(); 
+	    }
+        return true;
     }
     public boolean desasignarHabitacion(int idReserva, int idHabitacion){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<HabitacionReserva> list = session.createCriteria(HabitacionReserva.class).list();
+        for (HabitacionReserva habitacionReserva: list) {
+        	if(habitacionReserva.getHabitacion().getHabitacionID().equals(new Integer(idHabitacion))&&habitacionReserva.getReserva().getReservaId().equals(new Integer(idReserva))){
+        	    session.delete(habitacionReserva);
+        	    session.flush();
+        		return true;
+        	}
+        }
         return false;
     }
 }

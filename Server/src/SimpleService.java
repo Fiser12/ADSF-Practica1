@@ -128,6 +128,23 @@ public class SimpleService {
         }
         return devolver;
     }
+	public List<HabitacionReserva> getHabitacionesReserva(Reserva reserva)
+	{
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<HabitacionReserva> list = session.createCriteria(HabitacionReserva.class).list();
+        List<HabitacionReserva> devolver = new LinkedList<HabitacionReserva>();
+        
+        for(HabitacionReserva habitacionReserva: list)
+        {
+        	if(habitacionReserva.getReserva().getReservaId()==reserva.getReservaId())
+        	{
+        		devolver.add(habitacionReserva);
+        	}
+        }
+		return devolver;
+		
+	}
     public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
         Session session = HibernateUtil.getSessionFactory().openSession();
         try{

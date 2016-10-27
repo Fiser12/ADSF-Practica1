@@ -22,6 +22,7 @@ import model.Habitacion;
 import model.HabitacionReserva;
 import model.Reserva;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -100,8 +101,33 @@ public class SimpleService {
         session.flush() ;
         return true;
     }
-    public Habitacion getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
-        return null;
+    @SuppressWarnings("unchecked")
+	public List<Habitacion> getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<Habitacion> list = session.createCriteria(Habitacion.class).list();
+        List<Habitacion> devolver = new LinkedList<Habitacion>();
+        for (Habitacion habitacion: list) {
+        	if(habitacion.getTipoHabitacion().equals(tipoReserva))
+        	{
+        		boolean libre = true;
+                List<HabitacionReserva> list2 = session.createCriteria(HabitacionReserva.class).list();
+                for(HabitacionReserva habitacionReserva: list2)
+                {
+                	if(habitacionReserva.getHabitacion().getHabitacionID().equals(habitacion.getHabitacionID())){
+                		if( startDate.compareTo(habitacionReserva.getStartDate()) * habitacionReserva.getStartDate().compareTo(endDate) > 0 || startDate.compareTo(habitacionReserva.getEndDate()) * habitacionReserva.getEndDate().compareTo(endDate) > 0)
+                		{//Entra aquí si esa franja de tiempo de inicio y fin que ya está ocupada por una reserva en esa habitación
+                			libre = false;
+                		}
+                	}
+                }
+        		if(libre)
+        		{
+        			devolver.add(habitacion);
+        		}
+        	}
+        }
+        return devolver;
     }
     public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
         Session session = HibernateUtil.getSessionFactory().openSession();

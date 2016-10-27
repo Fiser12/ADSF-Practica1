@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Server.Model.Habitacion" table="habitacion">
+        <id name="habitacionID" type="java.lang.Integer">
+            <column name="HABITACION_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="planta" type="java.lang.Integer">
+            <column name="planta" length="10" not-null="true"/>
+        </property>
+        <property name="tipoHabitacion" type="string">
+            <column name="tipoHabitacion" not-null="true"/>
+        </property>
+        <set name="habitacionReservas" table="habitacion_reservas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pk.habitacion" not-null="true" />
+            </key>
+            <one-to-many class="Server.Model.HabitacionReserva" />
+        </set>
+
+    </class>
+</hibernate-mapping>

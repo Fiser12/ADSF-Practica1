@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Server.Model.Reserva" table="reserva" >
+        <id name="reservaId" type="java.lang.Integer">
+            <column name="RESERVA_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="10" not-null="true" unique="true"/>
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="tipoReserva" type="string">
+            <column name="tipoReserva" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="numeroPersonas" type="java.lang.Integer">
+            <column name="numeroPersonas" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="telefono" type="java.lang.Integer">
+            <column name="telefono" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="precio" type="java.lang.Double">
+            <column name="precio" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="pagado" type="java.lang.Integer">
+            <column name="pagado" length="20" not-null="true" unique="true"/>
+        </property>
+        <property name="startTime" type="date">
+            <column name="Start_Date" length="10" not-null="true" />
+        </property>
+        <property name="endTime" type="date">
+            <column name="End_Date" length="10" not-null="true" />
+        </property>
+        <set name="habitacionReservas" table="habitacion_reservas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pk.reserva" not-null="true" />
+            </key>
+            <one-to-many class="Server.Model.HabitacionReserva" />
+        </set>
+    </class>
+</hibernate-mapping>

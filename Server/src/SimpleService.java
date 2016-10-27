@@ -28,7 +28,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+@SuppressWarnings("unchecked")
 public class SimpleService {
     
     public String  helloService(){
@@ -101,7 +101,6 @@ public class SimpleService {
         session.flush() ;
         return true;
     }
-    @SuppressWarnings("unchecked")
 	public List<Habitacion> getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

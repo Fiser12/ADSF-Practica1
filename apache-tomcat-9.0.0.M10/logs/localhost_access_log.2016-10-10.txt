@@ -1,0 +1,14 @@
+127.0.0.1 - - [10/Oct/2016:17:12:38 +0200] "GET /axis2/services/Server?wsdl HTTP/1.1" 200 43481
+127.0.0.1 - - [10/Oct/2016:17:12:38 +0200] "GET /axis2/services/Server?wsdl HTTP/1.1" 200 43481
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:07 +0200] "GET /axis2/services HTTP/1.1" 500 114
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:13 +0200] "GET /axis2 HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:13 +0200] "GET /axis2/ HTTP/1.1" 200 3733
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:13 +0200] "GET /axis2/axis2-web/css/axis-style.css HTTP/1.1" 200 1580
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:13 +0200] "GET /axis2/axis2-web/images/asf-logo.gif HTTP/1.1" 200 5866
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:13 +0200] "GET /axis2/axis2-web/images/axis_l.jpg HTTP/1.1" 200 12340
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:21 +0200] "GET /axis2/services/listServices HTTP/1.1" 200 4793
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:13:27 +0200] "GET /axis2/services/Server?wsdl HTTP/1.1" 200 43588
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:20:16 +0200] "GET /axis2 HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:20:16 +0200] "GET /axis2/ HTTP/1.1" 200 3733
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:20:18 +0200] "GET /axis2/services/listServices HTTP/1.1" 200 4767
+0:0:0:0:0:0:0:1 - - [10/Oct/2016:17:20:19 +0200] "GET /axis2/services/Server?wsdl HTTP/1.1" 200 43481

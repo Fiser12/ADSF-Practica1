@@ -1,0 +1,41 @@
+06-Oct-2016 16:00:57.301 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/9.0.0.M10
+06-Oct-2016 16:00:57.302 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Aug 31 2016 15:00:21 UTC
+06-Oct-2016 16:00:57.303 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         9.0.0.0
+06-Oct-2016 16:00:57.303 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+06-Oct-2016 16:00:57.304 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+06-Oct-2016 16:00:57.304 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+06-Oct-2016 16:00:57.304 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_101\jre
+06-Oct-2016 16:00:57.304 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_101-b13
+06-Oct-2016 16:00:57.304 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+06-Oct-2016 16:00:57.305 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\projectInteliJ\apache-tomcat-9.0.0.M10
+06-Oct-2016 16:00:57.305 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\projectInteliJ\apache-tomcat-9.0.0.M10
+06-Oct-2016 16:00:57.305 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+06-Oct-2016 16:00:57.305 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\projectInteliJ\apache-tomcat-9.0.0.M10\conf\logging.properties
+06-Oct-2016 16:00:57.305 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+06-Oct-2016 16:00:57.306 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\projectInteliJ\apache-tomcat-9.0.0.M10
+06-Oct-2016 16:00:57.306 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\projectInteliJ\apache-tomcat-9.0.0.M10
+06-Oct-2016 16:00:57.306 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\projectInteliJ\apache-tomcat-9.0.0.M10\temp
+06-Oct-2016 16:00:57.307 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent La biblioteca nativa de Apache Tomcat basada en ARP que permite un rendimiento óptimo en entornos de desarrollo no ha sido hallada en java.library.path: C:\Program Files\Java\jdk1.8.0_101\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_101\bin;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Users\Usuario\AppData\Local\Microsoft\WindowsApps;;.
+06-Oct-2016 16:00:57.628 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+06-Oct-2016 16:00:57.741 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+06-Oct-2016 16:00:57.743 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+06-Oct-2016 16:00:57.745 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+06-Oct-2016 16:00:57.746 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 761 ms
+06-Oct-2016 16:00:57.774 INFO [main] org.apache.catalina.core.StandardService.startInternal Arrancando servicio Catalina
+06-Oct-2016 16:00:57.774 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/9.0.0.M10
+06-Oct-2016 16:00:57.798 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployWAR Despliegue del archivo C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\axis2.war de la aplicación web
+06-Oct-2016 16:01:00.902 INFO [localhost-startStop-1] org.apache.jasper.servlet.TldScanner.scanJars Al menos un JAR, que se ha explorado buscando TLDs, aún no contenía TLDs. Activar historial de depuración para este historiador para una completa lista de los JARs que fueron explorados y de los que nos se halló TLDs. Saltarse JARs no necesarios durante la exploración puede dar lugar a una mejora de tiempo significativa en el arranque y compilación de JSP .
+06-Oct-2016 16:01:11.636 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\axis2.war has finished in 13.838 ms
+06-Oct-2016 16:01:11.638 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Despliegue del directorio C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\docs de la aplicación web
+06-Oct-2016 16:01:11.657 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\docs has finished in 19 ms
+06-Oct-2016 16:01:11.657 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Despliegue del directorio C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\examples de la aplicación web
+06-Oct-2016 16:01:12.405 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\examples has finished in 748 ms
+06-Oct-2016 16:01:12.406 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Despliegue del directorio C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\host-manager de la aplicación web
+06-Oct-2016 16:01:12.450 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\host-manager has finished in 44 ms
+06-Oct-2016 16:01:12.450 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Despliegue del directorio C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\manager de la aplicación web
+06-Oct-2016 16:01:12.490 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\manager has finished in 40 ms
+06-Oct-2016 16:01:12.490 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Despliegue del directorio C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\ROOT de la aplicación web
+06-Oct-2016 16:01:12.524 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory C:\projectInteliJ\apache-tomcat-9.0.0.M10\webapps\ROOT has finished in 34 ms
+06-Oct-2016 16:01:12.531 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler [http-nio-8080]
+06-Oct-2016 16:01:12.539 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler [ajp-nio-8009]
+06-Oct-2016 16:01:12.541 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 14795 ms

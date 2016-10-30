@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -41,6 +42,21 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }  
+   /**
+    * Método que escucha el botón Actualizar Reserva y realiza el método updateReserva cuando se pulsa
+    * @param e
+    */
+    @FXML private void accionActualizarReserva(ActionEvent e){
+    	
+    }
+    
+    /**
+     * Método que escucha el botón Borrar Reserva y realiza el método deleteReserva cuando se pulsa
+     * @param e
+     */
+    @FXML private void accionBorrarReserva(ActionEvent e){
+    	
+    }
 
     /**
      * Returns the main stage.

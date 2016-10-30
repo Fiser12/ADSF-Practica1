@@ -21,7 +21,7 @@ public class GestionAltaTerminales {
 			CreateReserva nuevaReserva = new CreateReserva();
 			nuevaReserva.setReserva(r);
 			CreateReservaResponse nuevaReservaRes = stub.createReserva(nuevaReserva);
-
+			System.out.println(nuevaReservaRes.get_return());
 		}catch (java.lang.Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -36,6 +36,7 @@ public class GestionAltaTerminales {
 			HelloService hs = new HelloService();
 			HelloServiceResponse hsr = stub.helloService(hs);
 			System.out.println(hsr.get_return());
+			
 			//prueba nueva reserva
 			Reserva r = new Reserva();
 	        r.setApellidos("Prueba");
@@ -45,11 +46,11 @@ public class GestionAltaTerminales {
 	        r.setPrecio(1000);
 	        r.setTelefono(678964578);
 			CrearReserva(stub, r);
+			
 			//prueba listado
 			ListadoReserva lreserva = new ListadoReserva();
 			ListadoReservaResponse lreservaRes = stub.listadoReserva(lreserva);
 			System.out.println(lreservaRes.get_return());
-
 		}catch (java.lang.Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

@@ -27,15 +27,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleService {
-    ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-    ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
-    ArrayList<HabitacionReserva> habitacionesReserva = new ArrayList<HabitacionReserva>();
+    public static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+    public static ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
+    public static ArrayList<HabitacionReserva> habitacionesReserva = new ArrayList<HabitacionReserva>();
     
     public String  helloService(){
         return "Hello ";
     }
     public Reserva[] listadoReserva(){
         Reserva[] array = new Reserva[reservas.size()];
+        System.out.println(reservas.size());
         array = reservas.toArray(array);
         return array;
     }
@@ -65,6 +66,7 @@ public class SimpleService {
         return false;
     }
     public boolean createReserva(Reserva reserva){
+        System.out.println(reserva.getNombre());
     	reservas.add(reserva);
     	return true;
     }

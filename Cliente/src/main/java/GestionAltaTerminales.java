@@ -38,7 +38,10 @@ public class GestionAltaTerminales {
 		try {
 			ListadoReserva lreserva = new ListadoReserva();
 			ListadoReservaResponse lReservaRes = stub.listadoReserva(lreserva);
-			System.out.println(lReservaRes.get_return());
+			//System.out.println(lReservaRes.get_return());
+			for(int i = 0; i < lReservaRes.get_return().length; i++){
+				System.out.println(lReservaRes.get_return()[i].getNombre());
+			}
 		}catch (java.lang.Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -84,7 +87,7 @@ public class GestionAltaTerminales {
 	public static void main(String[] args){
 		ServicioHotelStub stub;
 		try {
-			stub = new ServicioHotelStub("http://localhost:8080/axis2/services/ServicioHotel");
+			stub = new ServicioHotelStub("http://localhost:8080/axis2/services/HotelService");
 			HelloService hs = new HelloService();
 			HelloServiceResponse hsr = stub.helloService(hs);
 			System.out.println(hsr.get_return());
@@ -113,16 +116,16 @@ public class GestionAltaTerminales {
 			listarReservas(stub);
 			
 			//prueba obtener una reserva concreta
-			obtenerReserva(stub, r2);
+			//obtenerReserva(stub, r2);
 			
 			/*prueba actualizar una reserva concreta; 
 			 * Supongo que aquí ya hemos seleccionado previamente la que queremos actualizar
 			 */
-			r2.setPrecio(25000); //finjo que desde la ventana he cambiado un dato
-			actualizarReserva(stub, r2); //envío un r2 cambiado con respecto al almacenado
+			//r2.setPrecio(25000); //finjo que desde la ventana he cambiado un dato
+			//actualizarReserva(stub, r2); //envío un r2 cambiado con respecto al almacenado
 			
 			//prueba eliminar reserva
-			borrarReserva(stub, r);
+			//borrarReserva(stub, r);
 			
 		}catch (java.lang.Exception e) {
 			System.out.println(e.getMessage());

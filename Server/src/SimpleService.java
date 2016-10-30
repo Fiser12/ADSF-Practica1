@@ -17,7 +17,6 @@
  * under the License.
  */
 
-
 import model.Habitacion;
 import model.HabitacionReserva;
 import model.Reserva;

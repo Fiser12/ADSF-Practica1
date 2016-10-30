@@ -1,5 +1,5 @@
 import java.util.Date;
-import org.hibernate.Session;
+//import org.hibernate.Session;
 import model.Habitacion;
 import model.Reserva;
 import model.HabitacionReserva;
@@ -7,7 +7,7 @@ import model.HabitacionReserva;
 public class pruebaHibernate {
     public static void main(String[] args) {
         System.out.println("Hibernate many to many - join table + extra column (Annotation)");
-        Session session = HibernateUtil.getSessionFactory().openSession();
+  /**      Session session = HibernateUtil.getSessionFactory().openSession();
 
         session.beginTransaction();
 
@@ -35,6 +35,6 @@ public class pruebaHibernate {
         category1.getHabitacionReservas().add(stockCategory);
         session.save(stock);
         session.getTransaction().commit();
-        System.out.println("Done");
+        System.out.println("Done");**/
     }
 }

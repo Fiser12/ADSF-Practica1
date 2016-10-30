@@ -1,15 +1,15 @@
 package model;
 
-import javax.persistence.Embeddable;
+/**import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
-@Embeddable
+@Embeddable**/
 public class HabitacionReservaId implements java.io.Serializable {
 
 	private Habitacion habitacion;
     private Reserva reserva;
 
-	@ManyToOne
+//	@ManyToOne
 	public Habitacion getHabitacion() {
 		return habitacion;
 	}
@@ -18,7 +18,7 @@ public class HabitacionReservaId implements java.io.Serializable {
 		this.habitacion = habitacion;
 	}
 
-	@ManyToOne
+//	@ManyToOne
 	public Reserva getReserva() {
 		return reserva;
 	}

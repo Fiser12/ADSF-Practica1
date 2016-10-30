@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "reserva")
+@Table(name = "reserva")**/
 public class Reserva implements java.io.Serializable {
 
 	private Integer reservaId;
@@ -48,9 +48,9 @@ public class Reserva implements java.io.Serializable {
 		this.pagado = pagado;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "RESERVA_ID", unique = true, nullable = false)
+//	@Id
+//	@GeneratedValue(strategy = IDENTITY)
+//	@Column(name = "RESERVA_ID", unique = true, nullable = false)
 	public Integer getReservaId() {
 		return this.reservaId;
 	}
@@ -129,7 +129,7 @@ public class Reserva implements java.io.Serializable {
 		this.pagado = pagado;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.reserva", cascade=CascadeType.ALL)
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.reserva", cascade=CascadeType.ALL)
 	public Set<HabitacionReserva> getHabitacionReservas() {
 		return this.habitacionReservas;
 	}

@@ -1,7 +1,7 @@
 package model;
 
 import java.util.Date;
-
+/**
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 @Table(name = "habitacion_reserva")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.habitacion", joinColumns = @JoinColumn(name = "HABITACION_ID")),
-		@AssociationOverride(name = "pk.reserva", joinColumns = @JoinColumn(name = "RESERVA_ID")) })
+		@AssociationOverride(name = "pk.reserva", joinColumns = @JoinColumn(name = "RESERVA_ID")) })**/
 public class HabitacionReserva implements java.io.Serializable {
 
 	private HabitacionReservaId pk = new HabitacionReservaId();
@@ -28,7 +28,7 @@ public class HabitacionReserva implements java.io.Serializable {
 	public HabitacionReserva() {
 	}
 
-	@EmbeddedId
+//	@EmbeddedId
 	public HabitacionReservaId getPk() {
 		return pk;
 	}
@@ -37,7 +37,7 @@ public class HabitacionReserva implements java.io.Serializable {
 		this.pk = pk;
 	}
 
-	@Transient
+//	@Transient
 	public Habitacion getHabitacion() {
 		return getPk().getHabitacion();
 	}
@@ -46,7 +46,7 @@ public class HabitacionReserva implements java.io.Serializable {
 		getPk().setHabitacion(habitacion);
 	}
 
-	@Transient
+//	@Transient
 	public Reserva getReserva() {
 		return getPk().getReserva();
 	}
@@ -55,8 +55,8 @@ public class HabitacionReserva implements java.io.Serializable {
 		getPk().setReserva(reserva);
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "CREATED_DATE", nullable = false, length = 10)
+//	@Temporal(TemporalType.DATE)
+//	@Column(name = "CREATED_DATE", nullable = false, length = 10)
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -65,8 +65,8 @@ public class HabitacionReserva implements java.io.Serializable {
 		this.startDate = startDate;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "END_DATE", nullable = false, length = 10)
+//	@Temporal(TemporalType.DATE)
+//	@Column(name = "END_DATE", nullable = false, length = 10)
 	public Date getEndDate() {
 		return this.endDate;
 	}
@@ -75,7 +75,7 @@ public class HabitacionReserva implements java.io.Serializable {
 		this.endDate = endDate;
 	}
 
-	@Column(name = "CREATED_BY", nullable = false, length = 10)
+//	@Column(name = "CREATED_BY", nullable = false, length = 10)
 	public String getCreatedBy() {
 		return this.createdBy;
 	}

@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashSet;
 import java.util.Set;
-
+/**
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "habitacion")
+@Table(name = "habitacion")**/
 public class Habitacion implements java.io.Serializable {
 
 	private Integer habitacionID;
@@ -30,9 +30,9 @@ public class Habitacion implements java.io.Serializable {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "HABITACION_ID", unique = true, nullable = false)
+//	@Id
+//	@GeneratedValue(strategy = IDENTITY)
+//	@Column(name = "HABITACION_ID", unique = true, nullable = false)
 	public Integer getHabitacionID() {
 		return this.habitacionID;
 	}
@@ -57,7 +57,7 @@ public class Habitacion implements java.io.Serializable {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.habitacion")
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.habitacion")
 	public Set<HabitacionReserva> getHabitacionReservas() {
 		return this.habitacionReservas;
 	}

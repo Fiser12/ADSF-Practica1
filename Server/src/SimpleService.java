@@ -36,7 +36,8 @@ public class SimpleService {
     }
     public Reserva[] listadoReserva(){
         Reserva[] array = new Reserva[reservas.size()];
-        return reservas.toArray(array);
+        array = reservas.toArray(array);
+        return array;
     }
     public Reserva getReserva(int id){
         for (Reserva reserva: reservas) {

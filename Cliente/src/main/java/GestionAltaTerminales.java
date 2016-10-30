@@ -93,6 +93,7 @@ public class GestionAltaTerminales {
 			System.out.println(hsr.get_return());
 			
 			Reserva r = new Reserva();
+			r.setReservaId(1);
 	        r.setApellidos("Prueba");
 	        r.setStartTime(new Date());
 	        r.setEndTime(new Date());
@@ -101,6 +102,7 @@ public class GestionAltaTerminales {
 	        r.setTelefono(678964578);
 	        
 	        Reserva r2 = new Reserva();
+	        r2.setReservaId(2);
 	        r2.setApellidos("Prueba2");
 	        r2.setStartTime(new Date());
 	        r2.setEndTime(new Date());
@@ -121,11 +123,19 @@ public class GestionAltaTerminales {
 			/*prueba actualizar una reserva concreta; 
 			 * Supongo que aquí ya hemos seleccionado previamente la que queremos actualizar
 			 */
-			//r2.setPrecio(25000); //finjo que desde la ventana he cambiado un dato
-			//actualizarReserva(stub, r2); //envío un r2 cambiado con respecto al almacenado
+			r2.setNombre("Paco"); //finjo que desde la ventana he cambiado un dato
+			actualizarReserva(stub, r2); //envío un r2 cambiado con respecto al almacenado
+			
+			//Veo si se actualiza
+			System.out.println("Actualización");
+			listarReservas(stub);
 			
 			//prueba eliminar reserva
-			//borrarReserva(stub, r);
+			borrarReserva(stub, r);
+			
+			//Veo si se borra
+			System.out.println("Borrado la reserva 1");
+			listarReservas(stub);
 			
 		}catch (java.lang.Exception e) {
 			System.out.println(e.getMessage());

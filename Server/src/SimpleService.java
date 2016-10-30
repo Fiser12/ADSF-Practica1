@@ -21,31 +21,25 @@
 import model.Habitacion;
 import model.HabitacionReserva;
 import model.Reserva;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-@SuppressWarnings("unchecked")
 public class SimpleService {
+    ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+    ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
+    ArrayList<HabitacionReserva> habitacionesReserva = new ArrayList<HabitacionReserva>();
     
     public String  helloService(){
         return "Hello ";
     }
     public Reserva[] listadoReserva(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Reserva> list = session.createCriteria(Reserva.class).list();
-        Reserva[] array = new Reserva[list.size()];
-        return list.toArray(array);
+        Reserva[] array = new Reserva[reservas.size()];
+        return reservas.toArray(array);
     }
     public Reserva getReserva(int id){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Reserva> list = session.createCriteria(Reserva.class).list();
-        for (Reserva reserva: list) {
+        for (Reserva reserva: reservas) {
         	if(reserva.getReservaId().equals(new Integer(id))){
         		return reserva;
         	}
@@ -53,12 +47,7 @@ public class SimpleService {
         return null;
     }
     public boolean updateReserva(Reserva reserva){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        try{
-	        tx = session.beginTransaction();
-	        List<Reserva> list = session.createCriteria(Reserva.class).list();
-	        for (Reserva reservaTemp: list) {
+	        for (Reserva reservaTemp: reservas) {
 	        	if(reservaTemp.getReservaId().equals(reserva.getReservaId())){
 	        		reservaTemp.setApellidos(reserva.getApellidos());
 	        		reservaTemp.setEndTime(reserva.getEndTime());
@@ -69,49 +58,31 @@ public class SimpleService {
 	        		reservaTemp.setPagado(reserva.getPagado());
 	        		reservaTemp.setPrecio(reserva.getPrecio());
 	        		reservaTemp.setTipoReserva(reserva.getTipoReserva());
-	                session.update(reservaTemp); 
-	                tx.commit();
 	                return true;
 	        	}
 	        }
-	    }catch (HibernateException e) {
-	        return false;
-	    }finally {
-	        session.close(); 
-	    }
         return false;
     }
     public boolean createReserva(Reserva reserva){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try{
-	        session.beginTransaction();
-	        session.save(reserva);
-	        session.getTransaction().commit();
-	    }catch (HibernateException e) {
-	        return false;
-	    }finally {
-	        session.close(); 
-	    }
-        return true;
+    	reservas.add(reserva);
+    	return true;
     }
     public boolean deleteReserva(int id){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Reserva reserva = (Reserva)session.load(Reserva.class,id);
-        session.delete(reserva);
-        session.flush() ;
-        return true;
+    	for(int i = 0; i<reservas.size(); i++){
+    		if(reservas.get(i).getReservaId().equals(new Integer(id))){
+        		reservas.remove(i);
+                return true;
+        	}
+        }
+    return false;
     }
 	public List<Habitacion> getHabitacionesLibres(Date startDate, Date endDate, String tipoReserva){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<Habitacion> list = session.createCriteria(Habitacion.class).list();
         List<Habitacion> devolver = new LinkedList<Habitacion>();
-        for (Habitacion habitacion: list) {
+        for (Habitacion habitacion: habitaciones) {
         	if(habitacion.getTipoHabitacion().equals(tipoReserva))
         	{
         		boolean libre = true;
-                List<HabitacionReserva> list2 = session.createCriteria(HabitacionReserva.class).list();
-                for(HabitacionReserva habitacionReserva: list2)
+                for(HabitacionReserva habitacionReserva: habitacionesReserva)
                 {
                 	if(habitacionReserva.getHabitacion().getHabitacionID().equals(habitacion.getHabitacionID())){
                 		if( startDate.compareTo(habitacionReserva.getStartDate()) * habitacionReserva.getStartDate().compareTo(endDate) > 0 || startDate.compareTo(habitacionReserva.getEndDate()) * habitacionReserva.getEndDate().compareTo(endDate) > 0)
@@ -130,12 +101,8 @@ public class SimpleService {
     }
 	public List<HabitacionReserva> getHabitacionesReserva(Reserva reserva)
 	{
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<HabitacionReserva> list = session.createCriteria(HabitacionReserva.class).list();
-        List<HabitacionReserva> devolver = new LinkedList<HabitacionReserva>();
-        
-        for(HabitacionReserva habitacionReserva: list)
+        List<HabitacionReserva> devolver = new LinkedList<HabitacionReserva>();       
+        for(HabitacionReserva habitacionReserva: habitacionesReserva)
         {
         	if(habitacionReserva.getReserva().getReservaId()==reserva.getReservaId())
         	{
@@ -146,27 +113,19 @@ public class SimpleService {
 		
 	}
     public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try{
-	        session.beginTransaction();
-	        session.save(habitacionReserva);
-	        session.getTransaction().commit();
-	    }catch (HibernateException e) {
-	        return false;
-	    }finally {
-	        session.close(); 
-	    }
+    	for(int i = 0; i<habitacionesReserva.size(); i++){
+        	if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(habitacionReserva.getHabitacion().getHabitacionID())&&habitacionesReserva.get(i).getReserva().getReservaId().equals(habitacionReserva.getReserva().getReservaId())){
+        	    return false;
+        	}
+        }
+    	habitacionesReserva.add(habitacionReserva);
         return true;
     }
     public boolean desasignarHabitacion(int idReserva, int idHabitacion){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        List<HabitacionReserva> list = session.createCriteria(HabitacionReserva.class).list();
-        for (HabitacionReserva habitacionReserva: list) {
-        	if(habitacionReserva.getHabitacion().getHabitacionID().equals(new Integer(idHabitacion))&&habitacionReserva.getReserva().getReservaId().equals(new Integer(idReserva))){
-        	    session.delete(habitacionReserva);
-        	    session.flush();
-        		return true;
+    	for(int i = 0; i<habitacionesReserva.size(); i++){
+        	if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(new Integer(idHabitacion))&&habitacionesReserva.get(i).getReserva().getReservaId().equals(new Integer(idReserva))){
+        		habitacionesReserva.remove(i);
+        	    return true;
         	}
         }
         return false;

@@ -22,6 +22,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.SAXException;
 
 public class VentanaInicial {
 	private GestionAltaTerminales controller = GestionAltaTerminales.getInstance();
@@ -149,7 +164,123 @@ public class VentanaInicial {
 		});
 
 		panel.add(btnBorrarReserva);
+		
+        JButton btnCargar = new JButton("Cargar XML");
+        btnCargar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+					final File f = new File("./files/reservas.xml");
+
+			        // Illustrate two methods to create JAXBContext for j2s binding.
+			        // (1) by root classes newInstance(Class ...)
+			        JAXBContext context1 = null;
+					try {
+						context1 = JAXBContext.newInstance(Reserva.class);
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+			        // (2) by package, requires jaxb.index file in package cardfile.
+			        //     newInstance(String packageNames)
+			        JAXBContext context2 = null;
+					try {
+						context2 = JAXBContext.newInstance("model.xsd");
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        
+			        Marshaller m = null;
+					try {
+						m = context1.createMarshaller();
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        try {
+						m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+					} catch (PropertyException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+			        try {
+						m.marshal(getReserva(), System.out);
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+			        // illustrate optional unmarshal validation.
+			        Marshaller m2 = null;
+					try {
+						m2 = context1.createMarshaller();
+					} catch (JAXBException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+			        try {
+						m2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+					} catch (PropertyException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        try {
+						m2.marshal(getReserva(), new FileOutputStream(f));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        Unmarshaller um = null;
+					try {
+						um = context2.createUnmarshaller();
+					} catch (JAXBException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        try {
+						um.setSchema(getSchema("./files/schema1.xsd"));
+					} catch (SAXException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        // This cast is possible because BusinessCard is annotated as @XmlRootElement
+			        // Otherwise, JAXBElement<BusinessCard> and getValue() method should be used
+			        //BusinessCard bc = (BusinessCard) um.unmarshal(f);
+			        //m.marshal(bc, System.out);
+				}
+		});
+		panel.add(btnCargar);
 	}
+
+	static Schema getSchema(String schemaResourceName) throws SAXException {
+		SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+		try {
+			return sf.newSchema(new File(schemaResourceName));
+		} catch (SAXException se) {
+			// this can only happen if there's a deployment error and the resource is missing.
+			throw se;
+		}
+	}
+        
+        private static Reserva getReserva() {
+   		 Reserva reserva = new Reserva();
+   		 reserva.setNombre("Benito");
+   		 reserva.setApellidos("Alonso");
+   		 reserva.setNumeroPersonas(3);
+   		 reserva.setTipoReserva("Doble");
+   		 reserva.setTelefono(944323532);
+   		 reserva.setStartTime(new Date());
+   		 reserva.setEndTime(new Date());
+   		 reserva.setPrecio(53.32);
+   		 reserva.setPagado(0); 
+   		 return reserva;
+   			
+   	    }
+	
 	class DateRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = 1L;

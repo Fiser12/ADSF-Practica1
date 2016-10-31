@@ -8,13 +8,15 @@
 
             
                 package model.xsd;
-            
 
-            /**
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
             *  Reserva bean class
             */
             @SuppressWarnings({"unchecked","unused"})
-        
+            
+        @XmlRootElement
         public  class Reserva
         implements org.apache.axis2.databinding.ADBBean{
         /* This type was generated from the piece of schema that had

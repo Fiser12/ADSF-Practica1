@@ -53,7 +53,12 @@ public class VentanaInicial {
 	 */
 	public VentanaInicial() {
 		try{
-			reservas = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
+			Reserva [] reservasTemp  = controller.listarReservas();
+			if(reservasTemp != null){
+				reservas = new ArrayList<Reserva>(Arrays.asList(reservasTemp));
+			}else{
+				reservas = new ArrayList<Reserva>();
+			}
 		}catch(Exception e){
 			Reserva reserva = new Reserva();
 			reserva.setReservaId(0);
@@ -106,10 +111,17 @@ public class VentanaInicial {
 				}
 			    boolean creado = controller.crearReserva(reserva);
 			    if(creado){
-			    	reservas.clear();
-			    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
-			    	reservas.addAll(reservasTemp);
-				    model.fireTableDataChanged();
+			    	model.getReservas().clear();
+			    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
+			    	Reserva [] reservasTemp2  = controller.listarReservas();
+					if(reservasTemp2 != null){
+						reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
+					}else{
+						reservasTemp = new ArrayList<Reserva>();
+					}
+			    	model.getReservas().addAll(reservasTemp);
+			    	System.out.println(reservas.size());
+			    	model.fireTableDataChanged();
 			    }
 			}
 		});
@@ -121,9 +133,15 @@ public class VentanaInicial {
 				    ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
 				    boolean borrado = controller.borrarReserva(model.getReservaAt(table.getSelectedRow()));
 				    if(borrado){
-				    	reservas.clear();
-				    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
-				    	reservas.addAll(reservasTemp);
+				    	model.getReservas().clear();
+				    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
+				    	Reserva [] reservasTemp2  = controller.listarReservas();
+						if(reservasTemp2 != null){
+							reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
+						}else{
+							reservasTemp = new ArrayList<Reserva>();
+						}
+						model.getReservas().addAll(reservasTemp);
 					    model.fireTableDataChanged();
 				    }
 		        }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reserva>
+    <apellidos>Alonso</apellidos>
+    <endTime>2016-10-31T16:30:29.798+01:00</endTime>
+    <nombre>Benito</nombre>
+    <numeroPersonas>3</numeroPersonas>
+    <pagado>0</pagado>
+    <precio>53.32</precio>
+    <reservaId>0</reservaId>
+    <startTime>2016-10-31T16:30:29.798+01:00</startTime>
+    <telefono>944323532</telefono>
+    <tipoReserva>Doble</tipoReserva>
+</reserva>

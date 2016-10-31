@@ -16,6 +16,13 @@ public class ReservaTableItemModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7161436789543183207L;
 	private List<Reserva> reservas;
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
 	private GestionAltaTerminales controller = GestionAltaTerminales.getInstance();
 
     public ReservaTableItemModel(List<Reserva> reservas) {
@@ -34,7 +41,7 @@ public class ReservaTableItemModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-        return 8;
+        return 9;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -143,15 +150,24 @@ public class ReservaTableItemModel extends AbstractTableModel {
         	reserva.setPrecio(Double.parseDouble(aValue.toString()));
             break;
         case 8:
-        	int pag = Integer.parseInt(aValue.toString());
-			reserva.setPagado(pag);
+        	if(aValue.toString().equals("false")){
+        		reserva.setPagado(0);
+        	}else{
+        		reserva.setPagado(1);
+        	}
 			break;
         }
         boolean actualizado = controller.actualizarReserva(reserva);
         if(actualizado)
         {
 	    	reservas.clear();
-	    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
+	    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
+	    	Reserva [] reservasTemp2  = controller.listarReservas();
+			if(reservasTemp2 != null){
+				reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
+			}else{
+				reservasTemp = new ArrayList<Reserva>();
+			}
 	    	reservas.addAll(reservasTemp);
 		    fireTableDataChanged();
         }

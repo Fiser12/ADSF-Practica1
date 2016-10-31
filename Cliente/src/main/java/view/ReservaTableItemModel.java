@@ -4,16 +4,19 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import controller.GestionAltaTerminales;
 import model.xsd.Reserva;
 
 public class ReservaTableItemModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7161436789543183207L;
 	private List<Reserva> reservas;
+	private GestionAltaTerminales controller = GestionAltaTerminales.getInstance();
 
     public ReservaTableItemModel(List<Reserva> reservas) {
 
@@ -143,11 +146,15 @@ public class ReservaTableItemModel extends AbstractTableModel {
         	int pag = Integer.parseInt(aValue.toString());
 			reserva.setPagado(pag);
 			break;
-
         }
-
-
-        fireTableCellUpdated(rowIndex, columnIndex);
+        boolean actualizado = controller.actualizarReserva(reserva);
+        if(actualizado)
+        {
+	    	reservas.clear();
+	    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
+	    	reservas.addAll(reservasTemp);
+		    fireTableDataChanged();
+        }
     }
     public boolean isCellEditable(int row, int col)
     { return true; }

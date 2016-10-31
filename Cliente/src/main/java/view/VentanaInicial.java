@@ -3,11 +3,14 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -23,7 +26,8 @@ import javax.swing.JButton;
 public class VentanaInicial {
 	private GestionAltaTerminales controller = GestionAltaTerminales.getInstance();
 	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-	
+    private DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+
 	private JFrame frame;
 	private JTable table;
 	private ReservaTableItemModel table_model;
@@ -94,10 +98,19 @@ public class VentanaInicial {
 			public void actionPerformed(ActionEvent e) {
 			    ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
 			    Reserva reserva = new Reserva();
-			    reserva.setStartTime(new Date());
-			    reserva.setEndTime(new Date());
-			    model.addRow(reserva);
-			    model.fireTableDataChanged();
+			    reserva.setReservaId(new Random().nextInt(Integer.MAX_VALUE));
+			    try {
+					reserva.setStartTime(df.parse("1900-10-21"));
+				    reserva.setEndTime(df.parse("1900-10-21"));
+				} catch (ParseException e1) {
+				}
+			    boolean creado = controller.crearReserva(reserva);
+			    if(creado){
+			    	reservas.clear();
+			    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
+			    	reservas.addAll(reservasTemp);
+				    model.fireTableDataChanged();
+			    }
 			}
 		});
 		JButton btnBorrarReserva = new JButton("Borrar Reserva");
@@ -106,8 +119,13 @@ public class VentanaInicial {
 			public void actionPerformed(ActionEvent e) {
 		        if (table.getSelectedRow() != -1) {
 				    ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
-		            model.removeRow(table.getSelectedRow());
-				    model.fireTableDataChanged();
+				    boolean borrado = controller.borrarReserva(model.getReservaAt(table.getSelectedRow()));
+				    if(borrado){
+				    	reservas.clear();
+				    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>(Arrays.asList(controller.listarReservas()));
+				    	reservas.addAll(reservasTemp);
+					    model.fireTableDataChanged();
+				    }
 		        }
 			}
 		});
@@ -118,7 +136,6 @@ public class VentanaInicial {
 
 		private static final long serialVersionUID = 1L;
 		private Date dateValue;
-		private SimpleDateFormat sdfNewValue = new SimpleDateFormat("yyyy-mm-dd");
 		private String valueToString = "";
 
 		@Override
@@ -127,7 +144,7 @@ public class VentanaInicial {
 		        String stringFormat = value.toString();
 		        try {
 		            dateValue = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(stringFormat);
-			        valueToString = sdfNewValue.format(dateValue);
+			        valueToString = df.format(dateValue);
 			        value = valueToString;
 				    super.setValue(value);
 		        } catch (Exception e) {

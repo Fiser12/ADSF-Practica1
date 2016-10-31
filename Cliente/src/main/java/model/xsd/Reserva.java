@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
             */
             @SuppressWarnings({"unchecked","unused"})
             
-        @XmlRootElement
+            @XmlRootElement(name = "reserva")
         public  class Reserva
         implements org.apache.axis2.databinding.ADBBean{
         /* This type was generated from the piece of schema that had

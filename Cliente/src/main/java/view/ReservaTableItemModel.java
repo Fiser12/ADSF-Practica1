@@ -16,6 +16,7 @@ public class ReservaTableItemModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7161436789543183207L;
 	private List<Reserva> reservas;
+	private String[] columnas = {"Nombre","Apellidos","Tipo de Reserva","Numero de Personas","Telefono","Fecha Inicio","Fecha Fin","Precio","Pagado"};
 	public List<Reserva> getReservas() {
 		return reservas;
 	}
@@ -182,6 +183,12 @@ public class ReservaTableItemModel extends AbstractTableModel {
      */
     public Reserva getReservaAt(int row) {
         return reservas.get(row);
+    }
+    
+    public String getColumnName(int index){
+
+    	return columnas[index];
+    	
     }
 
 }

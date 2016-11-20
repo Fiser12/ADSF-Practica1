@@ -1,2 +1,6 @@
-/model/
 /HibernateUtil.class
+/SimpleService.class
+/hibernate.cfg.xml
+/logback.xml
+/model/
+/pruebaHibernate.class

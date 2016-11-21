@@ -1,6 +1,7 @@
 package org.group;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,10 +9,13 @@ import org.group.model.Habitacion;
 import org.group.model.HabitacionReserva;
 import org.group.model.Reserva;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -25,12 +29,12 @@ public class MyResource {
 	 * @return String that will be returned as a text/plain response.
 	 */
 
+	@Context
+	UriInfo uriInfo;
 	public static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 	public static ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 	public static ArrayList<HabitacionReserva> habitacionesReserva = new ArrayList<HabitacionReserva>();
 
-
-	// This method is called if TEXT_PLAIN is request
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/hello")
@@ -61,7 +65,7 @@ public class MyResource {
 	@PUT
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/reserva/update")
-	public boolean updateReserva(Reserva reserva){
+	public Response updateReserva(Reserva reserva){
 		for (Reserva reservaTemp: reservas) {
 			if(reservaTemp.getReservaId().equals(reserva.getReservaId())){
 				reservaTemp.setApellidos(reserva.getApellidos());
@@ -73,32 +77,35 @@ public class MyResource {
 				reservaTemp.setPagado(reserva.getPagado());
 				reservaTemp.setPrecio(reserva.getPrecio());
 				reservaTemp.setTipoReserva(reserva.getTipoReserva());
-				return true;
+				URI uri = uriInfo.getAbsolutePathBuilder().build();
+				return Response.created(uri).entity(reserva).build(); // Code: 201
 			}
 		}
-		return false;
+		return Response.status(409).entity("Error en actualizacion de Reservas").build();
 	}
 	@DELETE
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/reserva/delete/{id}")
-	public boolean deleteReserva(int id){
+	public Response deleteReserva(int id){
 		for(int i = 0; i<reservas.size(); i++){
 			if(reservas.get(i).getReservaId().equals(new Integer(id))){
 				reservas.remove(i);
-				return true;
+				URI uri = uriInfo.getAbsolutePathBuilder().build();
+				return Response.created(uri).entity(id).build(); // Code: 201
 			}
 		}
-		return false;
+		return Response.status(409).entity("No se ha podido borrar la reserva").build();
 	}
 	@POST
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/reserva/create")
-	public boolean createReserva(Reserva reserva){
+	public Response createReserva(Reserva reserva){
 		System.out.println(reserva.getNombre());
 		reservas.add(reserva);
-		return true;
+		URI uri = uriInfo.getAbsolutePathBuilder().build();
+		return Response.created(uri).entity(reserva).build(); // Code: 201
 	}
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -148,27 +155,29 @@ public class MyResource {
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/habitacion/asignar")
-	public boolean asignarHabitacion(HabitacionReserva habitacionReserva){
+	public Response asignarHabitacion(HabitacionReserva habitacionReserva){
 		for(int i = 0; i<habitacionesReserva.size(); i++){
 			if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(habitacionReserva.getHabitacion().getHabitacionID())&&habitacionesReserva.get(i).getReserva().getReservaId().equals(habitacionReserva.getReserva().getReservaId())){
-				return false;
+				return Response.status(409).entity("Error al asignar habitación").build();
 			}
 		}
 		habitacionesReserva.add(habitacionReserva);
-		return true;
+		URI uri = uriInfo.getAbsolutePathBuilder().build();
+		return Response.created(uri).entity(habitacionesReserva).build(); // Code: 201
 	}
 	@DELETE
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes({"application/json"})
 	@Path("/habitacion/desasignar")
-	public boolean desasignarHabitacion(HabitacionReserva habitacionReserva){
+	public Response desasignarHabitacion(HabitacionReserva habitacionReserva){
 		for(int i = 0; i<habitacionesReserva.size(); i++){
 			if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(new Integer(habitacionReserva.getHabitacion().getHabitacionID()))&&habitacionesReserva.get(i).getReserva().getReservaId().equals(new Integer(habitacionReserva.getReserva().getReservaId()))){
 				habitacionesReserva.remove(i);
-				return true;
+				URI uri = uriInfo.getAbsolutePathBuilder().build();
+				return Response.created(uri).entity(habitacionesReserva).build(); // Code: 201
 			}
 		}
-		return false;
+		return Response.status(409).entity("Error al desasignar habitación").build();
 	}
 	@XmlRootElement
 	class SelectHabitacion{

@@ -1,9 +1,13 @@
 package org.group.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 @Embeddable**/
+
+@XmlRootElement
 public class HabitacionReservaId implements java.io.Serializable {
 
 	private Habitacion habitacion;

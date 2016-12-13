@@ -139,8 +139,8 @@ public class VentanaInicial {
 					reserva.setStartTime(df.parse("1900-10-21"));
 					reserva.setEndTime(df.parse("1900-10-21"));
 				} catch (ParseException e1) {
-				}
-				ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, reserva);
+			}
+				ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, reserva);
 				if(creado.getStatus()==201){
 					model.getReservas().clear();
 					ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();

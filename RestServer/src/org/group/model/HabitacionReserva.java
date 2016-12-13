@@ -1,6 +1,8 @@
 package org.group.model;
 
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
 /**
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -13,11 +15,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-@Entity
+
 @Table(name = "habitacion_reserva")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.habitacion", joinColumns = @JoinColumn(name = "HABITACION_ID")),
 		@AssociationOverride(name = "pk.reserva", joinColumns = @JoinColumn(name = "RESERVA_ID")) })**/
+@XmlRootElement
 public class HabitacionReserva implements java.io.Serializable {
 
 	private HabitacionReservaId pk = new HabitacionReservaId();

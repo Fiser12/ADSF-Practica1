@@ -98,8 +98,6 @@ public class MyResource {
 		return Response.status(409).entity("No se ha podido borrar la reserva").build();
 	}
 	@POST
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/reserva/create")
 	public Response createReserva(Reserva reserva){
 		System.out.println(reserva.getNombre());

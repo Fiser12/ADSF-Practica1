@@ -2,6 +2,8 @@ package org.group.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.xml.bind.annotation.XmlRootElement;
 /**
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
+
 @Table(name = "habitacion")**/
+
+@XmlRootElement
 public class Habitacion implements java.io.Serializable {
 
 	private Integer habitacionID;

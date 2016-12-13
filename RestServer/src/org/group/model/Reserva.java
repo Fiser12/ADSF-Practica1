@@ -3,6 +3,8 @@ package org.group.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.xml.bind.annotation.XmlRootElement;
 /**
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,8 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-@Entity
-@Table(name = "reserva")**/
+**/
+
+@XmlRootElement
 public class Reserva implements java.io.Serializable {
 
 	private Integer reservaId;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:reservasList xmlns:ns2="de.vogella.xml.jaxb.model">
+    <reservasList>
+        <reserva>
+               <reservaId>1</reservaId>
+    			<nombre>Juan</nombre>
+    			<apellidos>Tanamera</apellidos>
+    			<tipoReserva>Tipo 1</tipoReserva>
+    			<numeroPersonas>5</numeroPersonas>
+    			<telefono>654456654</telefono>
+    			<startTime>2012-08-22</startTime>
+    			<endTime>2012-10-22</endTime>
+    			<precio>1000</precio>
+    			<pagado>0</pagado>
+        </reserva>
+       <reserva>
+               <reservaId>2</reservaId>
+    			<nombre>Francisco</nombre>
+    			<apellidos>Pineda</apellidos>
+    			<tipoReserva>Tipo 2</tipoReserva>
+    			<numeroPersonas>3</numeroPersonas>
+    			<telefono>65897789</telefono>
+    			<startTime>2012-10-20</startTime>
+    			<endTime>2012-11-20</endTime>
+    			<precio>800</precio>
+    			<pagado>0</pagado>
+        </reserva>
+    </reservasList>
+</ns2:reservasList>

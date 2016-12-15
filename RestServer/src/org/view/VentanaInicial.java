@@ -163,7 +163,7 @@ public class VentanaInicial {
 				if (table.getSelectedRow() != -1) {
 					ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
 					//boolean borrado = controller.borrarReserva(model.getReservaAt(table.getSelectedRow()));
-					ClientResponse borrado = service.path("rest").path("hotel/reserva/delete").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, model.getReservaAt(table.getSelectedRow()));
+					ClientResponse borrado = service.path("rest").path("hotel/reserva/delete").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).delete(ClientResponse.class, model.getReservaAt(table.getSelectedRow()));
 					if(borrado.getStatus()==201){
 						model.getReservas().clear();
 						ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
@@ -196,7 +196,7 @@ public class VentanaInicial {
 					for (int i = 0; i < reservasList.getReservaList().toArray().length; i++) {
 						Reserva r = reservasList.getReservaList().get(i);
 						r.setReservaId(new Random().nextInt(Integer.MAX_VALUE));
-						ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, r);
+						ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, r);
 						if(creado.getStatus()==201){
 							model.getReservas().clear();
 							ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();

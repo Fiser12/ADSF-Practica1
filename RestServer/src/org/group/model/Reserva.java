@@ -35,7 +35,16 @@ public class Reserva implements java.io.Serializable {
 	private Set<HabitacionReserva> habitacionReservas = new HashSet<HabitacionReserva>(0);
 
 	public Reserva() {
-
+		this.reservaId = 0;
+		this.nombre = "defecto";
+		this.apellidos = "defecto";
+		this.tipoReserva = "tipoReservadefecto";
+		this.numeroPersonas = 1;
+		this.telefono = 789789789;
+		this.startTime = new Date();
+		this.endTime = new Date();
+		this.precio = 0;
+		this.pagado = 0;
 	}
 
 	public Reserva(Integer ID, String nombre, String apellidos, String tipoReserva, int numeroPersonas, int telefono, Date startTime, Date endTime, double precio, int pagado) {

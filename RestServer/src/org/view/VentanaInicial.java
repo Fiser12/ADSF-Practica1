@@ -136,7 +136,7 @@ public class VentanaInicial {
 				Reserva reserva = new Reserva();
 				reserva.setReservaId(new Random().nextInt(Integer.MAX_VALUE));
 				try {
-					reserva.setStartTime(df.parse("1900-10-21"));
+					reserva.setStartTime(new Date());
 					reserva.setEndTime(df.parse("1900-10-21"));
 				} catch (ParseException e1) {
 			}
@@ -144,7 +144,7 @@ public class VentanaInicial {
 				if(creado.getStatus()==201){
 					model.getReservas().clear();
 					ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
-					Reserva [] reservasTemp2  = service.path("rest").path("hotel").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
+					Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
 					if(reservasTemp2 != null){
 						reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
 					}else{

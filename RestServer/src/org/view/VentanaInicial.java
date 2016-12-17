@@ -135,7 +135,6 @@ public class VentanaInicial {
 			public void actionPerformed(ActionEvent e) {
 				if (table.getSelectedRow() != -1) {
 					ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
-					System.out.println(model.getReservaAt(table.getSelectedRow()).getReservaId().intValue());
 					ClientResponse borrado = service.path("rest").path("hotel/reserva/delete/"+model.getReservaAt(table.getSelectedRow()).getReservaId().intValue()).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 					if(borrado.getStatus()==201){
 						updateTable(model);

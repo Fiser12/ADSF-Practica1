@@ -162,10 +162,9 @@ public class ReservaTableItemModel extends AbstractTableModel {
         	}
 			break;
         }
-        ClientResponse actualizado = service.path("rest").path("hotel/reserva/update").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, reserva);
+        ClientResponse actualizado = service.path("rest").path("hotel/reserva/update/"+reserva.getReservaId().intValue()).type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, reserva);
         if(actualizado.getStatus() == 201)
         {
-        	System.out.println("UPDATE REALIZADA");
 	    	reservas.clear();
 	    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
 	    	Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);

@@ -34,9 +34,6 @@ public class ReservaTableItemModel extends AbstractTableModel {
 	public void setReservas(List<Reserva> reservas) {
 		this.reservas = reservas;
 	}
-
-	//private GestionAltaTerminales controller = GestionAltaTerminales.getInstance();
-
     public ReservaTableItemModel(List<Reserva> reservas) {
 
         this.reservas = new ArrayList<Reserva>(reservas);
@@ -93,13 +90,9 @@ public class ReservaTableItemModel extends AbstractTableModel {
     				pagado = true;
             	value = pagado;
                 break;
-
         }
-
         return value;
-
     }
-
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
@@ -123,7 +116,7 @@ public class ReservaTableItemModel extends AbstractTableModel {
             return Boolean.class;
         default:
         	return String.class;
-    }
+        }
     }
 
     @Override
@@ -169,10 +162,10 @@ public class ReservaTableItemModel extends AbstractTableModel {
         	}
 			break;
         }
-        //boolean actualizado = controller.actualizarReserva(reserva);
         ClientResponse actualizado = service.path("rest").path("hotel/reserva/update").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).put(ClientResponse.class, reserva);
         if(actualizado.getStatus() == 201)
         {
+        	System.out.println("UPDATE REALIZADA");
 	    	reservas.clear();
 	    	ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
 	    	Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);

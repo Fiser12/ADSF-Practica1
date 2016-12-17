@@ -47,7 +47,6 @@ public class MyResource {
 	@Path("/reserva/listado")
 	public Reserva[] listadoReserva(){
 		Reserva[] array = new Reserva[reservas.size()];
-		System.out.println(reservas.size());
 		array = reservas.toArray(array);
 		return array;
 	}
@@ -62,12 +61,15 @@ public class MyResource {
 		}
 		return null;
 	}
+
+
 	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/reserva/update")
-	public Response updateReserva(Reserva reserva){
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_XML)
+	@Path("/reserva/update/{id}")
+	public Response updateReserva(@PathParam("id") Integer id, Reserva reserva){
 		for (Reserva reservaTemp: reservas) {
-			if(reservaTemp.getReservaId().equals(reserva.getReservaId())){
+			if(reservaTemp.getReservaId().equals(id)){
 				reservaTemp.setApellidos(reserva.getApellidos());
 				reservaTemp.setEndTime(reserva.getEndTime());
 				reservaTemp.setStartTime(reserva.getStartTime());
@@ -77,33 +79,30 @@ public class MyResource {
 				reservaTemp.setPagado(reserva.getPagado());
 				reservaTemp.setPrecio(reserva.getPrecio());
 				reservaTemp.setTipoReserva(reserva.getTipoReserva());
-				URI uri = uriInfo.getAbsolutePathBuilder().build();
-				return Response.created(uri).entity(reserva).build(); // Code: 201
+			    return Response.ok().entity(reservaTemp).build();
 			}
 		}
 		return Response.status(409).entity("Error en actualizacion de Reservas").build();
 	}
-	@DELETE
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/reserva/delete/{id}")
-	public Response deleteReserva(int id){
-		for(int i = 0; i<reservas.size(); i++){
-			if(reservas.get(i).getReservaId().equals(new Integer(id))){
-				reservas.remove(i);
-				URI uri = uriInfo.getAbsolutePathBuilder().build();
-				return Response.created(uri).entity(id).build(); // Code: 201
-			}
-		}
-		return Response.status(409).entity("No se ha podido borrar la reserva").build();
-	}
 	@POST
 	@Path("/reserva/create")
 	public Response createReserva(Reserva reserva){
-		System.out.println(reserva.getNombre());
 		reservas.add(reserva);
 		URI uri = uriInfo.getAbsolutePathBuilder().build();
 		return Response.created(uri).entity(reserva).build(); // Code: 201
+	}
+	@DELETE
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/reserva/delete/{id}")
+	public Response deleteReserva(@PathParam("id") Integer id){
+		System.out.println(id);
+		for(int i = 0; i<reservas.size(); i++){
+			if(reservas.get(i).getReservaId().equals(id)){
+				reservas.remove(i);
+			    return Response.status(201).entity("Delete succesfull").build();
+			}
+		}
+		return Response.status(409).entity("No se ha podido borrar la reserva").build();
 	}
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -156,7 +155,7 @@ public class MyResource {
 	public Response asignarHabitacion(HabitacionReserva habitacionReserva){
 		for(int i = 0; i<habitacionesReserva.size(); i++){
 			if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(habitacionReserva.getHabitacion().getHabitacionID())&&habitacionesReserva.get(i).getReserva().getReservaId().equals(habitacionReserva.getReserva().getReservaId())){
-				return Response.status(409).entity("Error al asignar habitación").build();
+				return Response.status(409).entity("Error al asignar habitaciï¿½n").build();
 			}
 		}
 		habitacionesReserva.add(habitacionReserva);
@@ -175,7 +174,7 @@ public class MyResource {
 				return Response.created(uri).entity(habitacionesReserva).build(); // Code: 201
 			}
 		}
-		return Response.status(409).entity("Error al desasignar habitación").build();
+		return Response.status(409).entity("Error al desasignar habitaciï¿½n").build();
 	}
 	@XmlRootElement
 	class SelectHabitacion{

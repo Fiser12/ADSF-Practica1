@@ -11,39 +11,22 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
-
 import javax.swing.JFrame;
-
-import org.controller.ReservasList;
 import org.group.model.Reserva;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.net.URI;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-
-import org.group.MyResource;
 import org.xml.sax.SAXException;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -127,7 +110,7 @@ public class VentanaInicial {
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 
-		JButton btnAnadirReserva = new JButton("Añadir Reserva");
+		JButton btnAnadirReserva = new JButton("AÃ±adir Reserva");
 		panel.add(btnAnadirReserva);
 		btnAnadirReserva.addActionListener(new ActionListener()
 		{
@@ -142,17 +125,7 @@ public class VentanaInicial {
 			}
 				ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, reserva);
 				if(creado.getStatus()==201){
-					model.getReservas().clear();
-					ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
-					Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
-					if(reservasTemp2 != null){
-						reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
-					}else{
-						reservasTemp = new ArrayList<Reserva>();
-					}
-					model.getReservas().addAll(reservasTemp);
-					System.out.println(reservas.size());
-					model.fireTableDataChanged();
+					updateTable(model);
 				}
 			}
 		});
@@ -162,63 +135,15 @@ public class VentanaInicial {
 			public void actionPerformed(ActionEvent e) {
 				if (table.getSelectedRow() != -1) {
 					ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
-					//boolean borrado = controller.borrarReserva(model.getReservaAt(table.getSelectedRow()));
-					ClientResponse borrado = service.path("rest").path("hotel/reserva/delete").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).delete(ClientResponse.class, model.getReservaAt(table.getSelectedRow()));
+					System.out.println(model.getReservaAt(table.getSelectedRow()).getReservaId().intValue());
+					ClientResponse borrado = service.path("rest").path("hotel/reserva/delete/"+model.getReservaAt(table.getSelectedRow()).getReservaId().intValue()).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 					if(borrado.getStatus()==201){
-						model.getReservas().clear();
-						ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
-						Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
-						if(reservasTemp2 != null){
-							reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
-						}else{
-							reservasTemp = new ArrayList<Reserva>();
-						}
-						model.getReservas().addAll(reservasTemp);
-						model.fireTableDataChanged();
+						updateTable(model);
 					}
 				}
 			}
 		});
-
 		panel.add(btnBorrarReserva);
-
-		JButton btnCargar = new JButton("Importar XML");
-		btnCargar.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e) {
-				final File f = new File("./files/reservas.xml");
-				try{
-					JAXBContext context = JAXBContext.newInstance(ReservasList.class);
-					Unmarshaller um = context.createUnmarshaller();
-					ReservasList reservasList = (ReservasList) um.unmarshal(new FileReader(
-							"./files/reservas.xml"));
-					ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
-					for (int i = 0; i < reservasList.getReservaList().toArray().length; i++) {
-						Reserva r = reservasList.getReservaList().get(i);
-						r.setReservaId(new Random().nextInt(Integer.MAX_VALUE));
-						ClientResponse creado = service.path("rest").path("hotel/reserva/create").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, r);
-						if(creado.getStatus()==201){
-							model.getReservas().clear();
-							ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
-							Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
-							if(reservasTemp2 != null){
-								reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
-							}else{
-								reservasTemp = new ArrayList<Reserva>();
-							}
-							model.getReservas().addAll(reservasTemp);
-							System.out.println(reservas.size());
-							model.fireTableDataChanged();
-						}
-						
-					}
-				}catch(Exception e2){
-					e2.printStackTrace();
-				}
-
-			}
-		});
-		panel.add(btnCargar);
 	}
 
 	static Schema getSchema(String schemaResourceName) throws SAXException {
@@ -230,26 +155,23 @@ public class VentanaInicial {
 			throw se;
 		}
 	}
-
-	private static Reserva getReserva() {
-		Reserva reserva = new Reserva();
-		reserva.setNombre("Benito");
-		reserva.setApellidos("Alonso");
-		reserva.setNumeroPersonas(3);
-		reserva.setTipoReserva("Doble");
-		reserva.setTelefono(944323532);
-		reserva.setStartTime(new Date());
-		reserva.setEndTime(new Date());
-		reserva.setPrecio(53.32);
-		reserva.setPagado(0); 
-		return reserva;
+	private void updateTable(ReservaTableItemModel model){
+		model.getReservas().clear();
+		ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
+		Reserva [] reservasTemp2  = service.path("rest").path("hotel/reserva/listado").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
+		if(reservasTemp2 != null){
+			reservasTemp = new ArrayList<Reserva>(Arrays.asList(reservasTemp2));
+		}else{
+			reservasTemp = new ArrayList<Reserva>();
+		}
+		model.getReservas().addAll(reservasTemp);
+		model.fireTableDataChanged();
 
 	}
 	 private static URI getBaseURI() {
 			return UriBuilder.fromUri(
 					"http://localhost:8080/RestServer").build();
-		}
-
+	}
 	class DateRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = 1L;

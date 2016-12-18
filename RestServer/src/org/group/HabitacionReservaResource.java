@@ -35,7 +35,7 @@ public class HabitacionReservaResource {
 	}
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	@Path("/{idHabitacion}-{idReserva}")
+	@Path("/{idHabitacion}/{idReserva}")
 	public HabitacionReserva getHabitacion(int idHabitacion, int idReserva){
 		for (HabitacionReserva habitacion: habitacionesReserva) {
 			if(habitacion.getHabitacion().getHabitacionID().equals(new Integer(idHabitacion))&&habitacion.getReserva().getReservaId().equals(new Integer(idReserva))){
@@ -49,7 +49,7 @@ public class HabitacionReservaResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	@Path("/{idHabitacion}-{idReserva}")
+	@Path("/{idHabitacion}/{idReserva}")
 	public Response updateHabitacion(@PathParam("idHabitacion") Integer idHabitacion, @PathParam("idReserva") Integer idReserva, HabitacionReserva habitacionReserva){
 		for (HabitacionReserva habitacionTemp: habitacionesReserva) {
 			if(habitacionTemp.getHabitacion().getHabitacionID().equals(new Integer(idHabitacion))&&habitacionTemp.getReserva().getReservaId().equals(new Integer(idReserva))){

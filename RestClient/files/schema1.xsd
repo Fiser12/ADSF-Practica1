@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="reserva" type="reserva"/>
+
+  <xs:complexType name="reserva">
+    <xs:sequence>
+      <xs:element name="reservaId" type="xs:int" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="apellidos" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoReserva" type="xs:string" minOccurs="0"/>
+      <xs:element name="numeroPersonas" type="xs:int" minOccurs="0"/>
+      <xs:element name="telefono" type="xs:int" minOccurs="0"/>
+      <xs:element name="startTime" type="xs:date" minOccurs="0"/>
+      <xs:element name="endTime" type="xs:date" minOccurs="0"/>
+      <xs:element name="precio" type="xs:double" minOccurs="0"/>
+      <xs:element name="pagado" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

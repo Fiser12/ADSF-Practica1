@@ -36,11 +36,11 @@ public class Reserva implements java.io.Serializable {
 
 	public Reserva() {
 		this.reservaId = 0;
-		this.nombre = "defecto";
-		this.apellidos = "defecto";
-		this.tipoReserva = "tipoReservadefecto";
+		this.nombre = "introducir nombre";
+		this.apellidos = "introducir apellidos";
+		this.tipoReserva = "Normal";
 		this.numeroPersonas = 1;
-		this.telefono = 789789789;
+		this.telefono = 0;
 		this.startTime = new Date();
 		this.endTime = new Date();
 		this.precio = 0;

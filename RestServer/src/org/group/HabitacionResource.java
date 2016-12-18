@@ -25,7 +25,17 @@ public class HabitacionResource {
 	@Context
 	UriInfo uriInfo;
 	public static ArrayList<Habitacion> habitaciones = MockupDatabase.habitaciones;
-
+	public HabitacionResource(){
+		if(habitaciones.isEmpty())
+			for(int i = 0; i<6; i++)
+				for(int j = 0; j<60; j++)
+					if(j<30)
+						habitaciones.add(new Habitacion(new Integer(i*100+j), i, "Normal"));
+					else if(j<50)
+						habitaciones.add(new Habitacion(new Integer(i*100+j), i, "Deluxe"));
+					else
+						habitaciones.add(new Habitacion(new Integer(i*100+j), i, "Premium"));
+	}
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Path("/")

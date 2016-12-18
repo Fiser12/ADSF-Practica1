@@ -69,7 +69,7 @@ public class HabitacionReservaResource {
 	}
 	@DELETE
 	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/{idHabitacion}-{idReserva}")
+	@Path("/{idHabitacion}/{idReserva}")
 	public Response deleteHabitacion(@PathParam("idHabitacion") Integer idHabitacion, @PathParam("idReserva") Integer idReserva){
 		for(int i = 0; i<habitacionesReserva.size(); i++){
 			if(habitacionesReserva.get(i).getHabitacion().getHabitacionID().equals(idHabitacion)&&habitacionesReserva.get(i).getReserva().getReservaId().equals(idReserva)){

@@ -1,6 +1,7 @@
 package org.view;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -29,6 +30,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import java.io.File;
 import java.net.URI;
@@ -45,6 +48,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class VentanaInicial {
 	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
@@ -186,13 +190,95 @@ public class VentanaInicial {
 		panelDerecho.add(lblHabitacionesDeLa);
 
 		JButton btnReservarHabitacin = new JButton("Reservar habitación");
-		panelDerecho.add(btnReservarHabitacin);
+		btnReservarHabitacin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JDialog reservarDialog = new JDialog(frmRestClient, "Elige entre las habitaciones disponibles", true);
+				reservarDialog.setResizable(false);
+				reservarDialog.setSize(500, 400);
+				reservarDialog.setBounds(100, 100, 700, 400);
+				Reserva reserva = ((ReservaTableItemModel) tableReservas.getModel()).getReservaAt(tableReservas.getSelectedRow());
+				ArrayList<Habitacion> habitacionesDisponibles = buscarHabitacionesLibre(reserva);
+				HabitacionReservaTableItemModel table_model_3 = new HabitacionReservaTableItemModel(habitacionesDisponibles);
+				JTable tableHabitaciones = new JTable(table_model_3);
+				JScrollPane scrollPane = new JScrollPane(tableHabitaciones);
+				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+				reservarDialog.getContentPane().add(scrollPane, BorderLayout.CENTER);
+				JButton elegir = new JButton("Elegir");
+				elegir.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						HabitacionReserva habitacionReserva = new HabitacionReserva();
+						habitacionReserva.setEndDate(reserva.getEndTime());
+						habitacionReserva.setStartDate(reserva.getStartTime());
+						HabitacionReservaId temp = new HabitacionReservaId();
+						temp.setReserva(reserva);
+						temp.setHabitacion(((HabitacionReservaTableItemModel) tableHabitaciones.getModel()).getReservaAt(tableHabitaciones.getSelectedRow()));
+						habitacionReserva.setPk(temp);
+						ClientResponse creado = service.path("rest").path("habitacionReserva/").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, habitacionReserva);
+						if(creado.getStatus()==201){
+							reservarDialog.dispose();
+							updateTableHabitaciones((ReservaTableItemModel) tableReservas.getModel(), (HabitacionReservaTableItemModel) tableReservaPorHabitacion.getModel());
+						}
+						else{
+					        JOptionPane.showMessageDialog(null, "Error al registrar la reserva");
+						}
+					}
+				});
+				reservarDialog.getContentPane().add(new JPanel(new FlowLayout()).add(elegir), BorderLayout.SOUTH);
+				reservarDialog.setVisible(true);
 
+			}
+		});
+		panelDerecho.add(btnReservarHabitacin);
 		JButton btnLiberarHabitacion = new JButton("Liberar habitacion");
+		btnLiberarHabitacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int idHabitacion = ((HabitacionReservaTableItemModel)tableReservaPorHabitacion.getModel()).getReservaAt(tableReservaPorHabitacion.getSelectedRow()).getHabitacionID().intValue();
+				int idReserva = ((ReservaTableItemModel) tableReservas.getModel()).getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue();
+				ClientResponse borrado = service.path("rest").path("habitacionReserva/"+idHabitacion+"/"+idReserva).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+				if(borrado.getStatus()==201){
+					updateTableHabitaciones((ReservaTableItemModel) tableReservas.getModel(), (HabitacionReservaTableItemModel) tableReservaPorHabitacion.getModel());
+				}
+				else{
+			        JOptionPane.showMessageDialog(null, "Error al borrar la reserva");
+				}
+			}
+		});
 		panelDerecho.add(btnLiberarHabitacion);
 
 	}
-
+	private ArrayList<Habitacion> buscarHabitacionesLibre(Reserva reserva){
+		ArrayList<Habitacion> devolver = new ArrayList<Habitacion>();
+		Habitacion [] habitaciones = service.path("rest").path("habitacion/").accept(MediaType.APPLICATION_XML).get(Habitacion[].class);
+		HabitacionReserva [] habitacionesReservas  = service.path("rest").path("habitacionReserva/").accept(MediaType.APPLICATION_XML).get(HabitacionReserva[].class);		
+		for (Habitacion habitacion: habitaciones) {
+			if(habitacion.getTipoHabitacion().equals(reserva.getTipoReserva()))
+			{
+				boolean libre = true;
+				for(HabitacionReserva habitacionReserva: habitacionesReservas)
+				{
+					if(habitacionReserva.getHabitacion().getHabitacionID().equals(habitacion.getHabitacionID())){
+						if(betweenDates(habitacionReserva.getStartDate(), habitacionReserva.getEndDate(), reserva.getStartTime())){
+							libre = false;
+						}
+						else if(betweenDates(habitacionReserva.getStartDate(), habitacionReserva.getEndDate(), reserva.getEndTime())){
+							libre = false;
+						}
+					}
+				}
+				if(libre)
+				{
+					devolver.add(habitacion);
+				}
+			}
+		}
+		return devolver;
+	}
+	private boolean betweenDates(Date min, Date max, Date test)
+	{
+		return min.compareTo(test) * test.compareTo(max) > 0;
+	}
 	static Schema getSchema(String schemaResourceName) throws SAXException {
 		SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
 		try {
@@ -202,7 +288,6 @@ public class VentanaInicial {
 		}
 	}
 	private void updateTableReservas(ReservaTableItemModel model){
-		model.getReservas().clear();
 		ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
 		Reserva [] reservasTemp2  = service.path("rest").path("reserva/").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
 		if(reservasTemp2 != null){
@@ -210,25 +295,30 @@ public class VentanaInicial {
 		}else{
 			reservasTemp = new ArrayList<Reserva>();
 		}
+		model.getReservas().clear();
 		model.getReservas().addAll(reservasTemp);
 		model.fireTableDataChanged();
 	}
 	private void updateTableHabitaciones(ReservaTableItemModel model, HabitacionReservaTableItemModel model2)
 	{
-		int reservaId = model.getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue();
-		System.out.println(reservaId);
-		HabitacionReservaId [] habitacionReserva  = service.path("rest").path("habitacionReserva/").accept(MediaType.APPLICATION_XML).get(HabitacionReservaId[].class);
-		ArrayList<Habitacion> habitacionesTemp = new ArrayList<Habitacion>();
-        for (HabitacionReservaId i: habitacionReserva) {
-        	if(i.getReserva().getReservaId().intValue()==reservaId)
-        	{
-        		habitacionesTemp.add(i.getHabitacion());
-        	}
-        }
-        model2.getHabitaciones().clear();
-        model2.getHabitaciones().addAll(habitacionesTemp);
-        model2.fireTableDataChanged();
+		try{
+			int reservaId = model.getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue();
+			HabitacionReserva [] habitacionReserva  = service.path("rest").path("habitacionReserva/").accept(MediaType.APPLICATION_XML).get(HabitacionReserva[].class);
+			ArrayList<Habitacion> habitacionesTemp = new ArrayList<Habitacion>();
+	        for (HabitacionReserva i: habitacionReserva) {
+	        	if(i.getReserva().getReservaId().intValue()==reservaId)
+	        	{
+	        		habitacionesTemp.add(i.getHabitacion());
+	        	}
+	        }
+	        model2.getHabitaciones().clear();
+	        model2.getHabitaciones().addAll(habitacionesTemp);
+	        model2.fireTableDataChanged();
+		}catch(ArrayIndexOutOfBoundsException e){
+			
+		}
 	}
+	
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri(
 				"http://localhost:8080/RestServer").build();

@@ -24,7 +24,7 @@ public class ReservaTableItemModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 7161436789543183207L;
 	private List<Reserva> reservas;
-	private String[] columnas = {"Nombre","Apellidos","Tipo de Reserva","Numero de Personas","Telefono","Fecha Inicio","Fecha Fin","Precio","Pagado"};
+	private String[] columnas = {"Nombre","Apellidos","Tipo de Reserva","Nº Personas","Telefono","Fecha Inicio","Fecha Fin","Precio","Pagado"};
 	ClientConfig config = new DefaultClientConfig();
 	Client client = Client.create(config);
 	WebResource service = client.resource(getBaseURI());

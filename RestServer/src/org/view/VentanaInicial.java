@@ -9,11 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 import javax.swing.JFrame;
 
 import org.group.model.Habitacion;
+import org.group.model.HabitacionReserva;
+import org.group.model.HabitacionReservaId;
 import org.group.model.Reserva;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -39,6 +42,8 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import javax.swing.BoxLayout;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
 
 public class VentanaInicial {
@@ -77,7 +82,6 @@ public class VentanaInicial {
 	 */
 	public VentanaInicial(){
 		try{
-			//Reserva [] reservasTemp  = controller.listarReservas();
 			Reserva [] reservasTemp = service.path("rest/reserva").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
 			if(reservasTemp != null){
 				reservas = new ArrayList<Reserva>(Arrays.asList(reservasTemp));
@@ -124,6 +128,14 @@ public class VentanaInicial {
 		tableReservas.getColumnModel().getColumn(5).setCellRenderer(new DateRenderer());
 		tableReservas.getColumnModel().getColumn(6).setCellRenderer(new DateRenderer());
 		tableReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableReservas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				ReservaTableItemModel model = (ReservaTableItemModel) tableReservas.getModel();
+				HabitacionReservaTableItemModel model2 = (HabitacionReservaTableItemModel) tableReservaPorHabitacion.getModel();
+				updateTableHabitaciones(model, model2);
+			}
+		});
 		tableReservaPorHabitacion = new JTable(table_model_2);
 		JScrollPane scrollPane_1 = new JScrollPane(tableReservaPorHabitacion);
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -151,7 +163,7 @@ public class VentanaInicial {
 				}
 				ClientResponse creado = service.path("rest").path("reserva/").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, reserva);
 				if(creado.getStatus()==201){
-					updateTable(model);
+					updateTableReservas(model);
 				}
 			}
 		});
@@ -164,7 +176,7 @@ public class VentanaInicial {
 					ReservaTableItemModel model = (ReservaTableItemModel) tableReservas.getModel();
 					ClientResponse borrado = service.path("rest").path("reserva/"+model.getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue()).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 					if(borrado.getStatus()==201){
-						updateTable(model);
+						updateTableReservas(model);
 					}
 				}
 			}
@@ -186,11 +198,10 @@ public class VentanaInicial {
 		try {
 			return sf.newSchema(new File(schemaResourceName));
 		} catch (SAXException se) {
-			// this can only happen if there's a deployment error and the resource is missing.
 			throw se;
 		}
 	}
-	private void updateTable(ReservaTableItemModel model){
+	private void updateTableReservas(ReservaTableItemModel model){
 		model.getReservas().clear();
 		ArrayList<Reserva> reservasTemp = new ArrayList<Reserva>();
 		Reserva [] reservasTemp2  = service.path("rest").path("reserva/").accept(MediaType.APPLICATION_XML).get(Reserva[].class);
@@ -201,7 +212,22 @@ public class VentanaInicial {
 		}
 		model.getReservas().addAll(reservasTemp);
 		model.fireTableDataChanged();
-
+	}
+	private void updateTableHabitaciones(ReservaTableItemModel model, HabitacionReservaTableItemModel model2)
+	{
+		int reservaId = model.getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue();
+		System.out.println(reservaId);
+		HabitacionReservaId [] habitacionReserva  = service.path("rest").path("habitacionReserva/").accept(MediaType.APPLICATION_XML).get(HabitacionReservaId[].class);
+		ArrayList<Habitacion> habitacionesTemp = new ArrayList<Habitacion>();
+        for (HabitacionReservaId i: habitacionReserva) {
+        	if(i.getReserva().getReservaId().intValue()==reservaId)
+        	{
+        		habitacionesTemp.add(i.getHabitacion());
+        	}
+        }
+        model2.getHabitaciones().clear();
+        model2.getHabitaciones().addAll(habitacionesTemp);
+        model2.fireTableDataChanged();
 	}
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri(

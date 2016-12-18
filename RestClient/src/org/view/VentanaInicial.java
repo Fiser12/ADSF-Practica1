@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 import javax.swing.JFrame;
+
+import org.group.model.Habitacion;
 import org.group.model.Reserva;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -19,7 +21,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import java.io.File;
@@ -32,18 +37,24 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-
+import javax.swing.BoxLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JLabel;
 
 public class VentanaInicial {
 	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+	private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
+
 	private DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 
-	private JFrame frame;
-	private JTable table;
+	private JFrame frmRestClient;
+	private JTable tableReservas;
 	private ReservaTableItemModel table_model;
+	private HabitacionReservaTableItemModel table_model_2;
 	ClientConfig config = new DefaultClientConfig();
 	Client client = Client.create(config);
 	WebResource service = client.resource(getBaseURI());
+	private JTable tableReservaPorHabitacion;
 
 	/**
 	 * Launch the application.
@@ -53,7 +64,7 @@ public class VentanaInicial {
 			public void run() {
 				try {
 					VentanaInicial window = new VentanaInicial();
-					window.frame.setVisible(true);
+					window.frmRestClient.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -94,35 +105,50 @@ public class VentanaInicial {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 700, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRestClient = new JFrame();
+		frmRestClient.setResizable(false);
+		frmRestClient.setTitle("Rest Client");
+		frmRestClient.setBounds(100, 100, 700, 400);
+		frmRestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRestClient.setSize(new Dimension(1300, 600));
 		table_model = new ReservaTableItemModel(reservas);
-		table = new JTable(table_model);
+		table_model_2 = new HabitacionReservaTableItemModel(habitaciones);
+		JPanel panelCentral = new JPanel();
+		frmRestClient.getContentPane().add(panelCentral, BorderLayout.CENTER);
+		panelCentral.setLayout(new BorderLayout(0, 0));
+		tableReservas = new JTable(table_model);
+		JScrollPane scrollPane = new JScrollPane(tableReservas);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelCentral.add(scrollPane, BorderLayout.CENTER);
 
-		table.getColumnModel().getColumn(5).setCellRenderer(new DateRenderer());
-		table.getColumnModel().getColumn(6).setCellRenderer(new DateRenderer());
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableReservas.getColumnModel().getColumn(5).setCellRenderer(new DateRenderer());
+		tableReservas.getColumnModel().getColumn(6).setCellRenderer(new DateRenderer());
+		tableReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableReservaPorHabitacion = new JTable(table_model_2);
+		JScrollPane scrollPane_1 = new JScrollPane(tableReservaPorHabitacion);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelCentral.add(scrollPane_1, BorderLayout.EAST);
 
-		frame.getContentPane().add(table, BorderLayout.CENTER);
-		frame.getContentPane().add(table.getTableHeader(), BorderLayout.NORTH);
+		JPanel panelDerecho = new JPanel();
+		frmRestClient.getContentPane().add(panelDerecho, BorderLayout.EAST);
+		panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.PAGE_AXIS));
 
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+		JLabel lblReservas = new JLabel("Reservas");
+		panelDerecho.add(lblReservas);
 
 		JButton btnAnadirReserva = new JButton("Añadir Reserva");
-		panel.add(btnAnadirReserva);
+		panelDerecho.add(btnAnadirReserva);
 		btnAnadirReserva.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
+				ReservaTableItemModel model = (ReservaTableItemModel) tableReservas.getModel();
 				Reserva reserva = new Reserva();
 				reserva.setReservaId(new Random().nextInt(Integer.MAX_VALUE));
 				try {
 					reserva.setStartTime(new Date());
 					reserva.setEndTime(df.parse("1900-10-21"));
 				} catch (ParseException e1) {
-			}
+				}
 				ClientResponse creado = service.path("rest").path("reserva/").type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, reserva);
 				if(creado.getStatus()==201){
 					updateTable(model);
@@ -130,19 +156,29 @@ public class VentanaInicial {
 			}
 		});
 		JButton btnBorrarReserva = new JButton("Borrar Reserva");
+		panelDerecho.add(btnBorrarReserva);
 		btnBorrarReserva.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
-					ReservaTableItemModel model = (ReservaTableItemModel) table.getModel();
-					ClientResponse borrado = service.path("rest").path("reserva/"+model.getReservaAt(table.getSelectedRow()).getReservaId().intValue()).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+				if (tableReservas.getSelectedRow() != -1) {
+					ReservaTableItemModel model = (ReservaTableItemModel) tableReservas.getModel();
+					ClientResponse borrado = service.path("rest").path("reserva/"+model.getReservaAt(tableReservas.getSelectedRow()).getReservaId().intValue()).type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 					if(borrado.getStatus()==201){
 						updateTable(model);
 					}
 				}
 			}
 		});
-		panel.add(btnBorrarReserva);
+
+		JLabel lblHabitacionesDeLa = new JLabel("Habitaciones de la reserva");
+		panelDerecho.add(lblHabitacionesDeLa);
+
+		JButton btnReservarHabitacin = new JButton("Reservar habitación");
+		panelDerecho.add(btnReservarHabitacin);
+
+		JButton btnLiberarHabitacion = new JButton("Liberar habitacion");
+		panelDerecho.add(btnLiberarHabitacion);
+
 	}
 
 	static Schema getSchema(String schemaResourceName) throws SAXException {
@@ -167,9 +203,9 @@ public class VentanaInicial {
 		model.fireTableDataChanged();
 
 	}
-	 private static URI getBaseURI() {
-			return UriBuilder.fromUri(
-					"http://localhost:8080/RestServer").build();
+	private static URI getBaseURI() {
+		return UriBuilder.fromUri(
+				"http://localhost:8080/RestServer").build();
 	}
 	class DateRenderer extends DefaultTableCellRenderer {
 

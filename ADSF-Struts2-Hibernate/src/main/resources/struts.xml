@@ -6,13 +6,15 @@
 <struts>
  	<constant name="struts.devMode" value="true" />
 	<package name="default" namespace="/" extends="struts-default">
-		<action name="addReservaAction"
-                class="struts.reserva.ReservaAction" method="addReserva" >
+        <action name="addReserva"
+                class="struts.reserva.ReservaAction" method="execute" >
+            <result name="success" type="redirect">
+                listReservas
+            </result>
+		</action>
+		<action name="listReservas"
+                class="struts.reserva.ReservaAction" method="listReservas" >
 		    <result name="success">pages/reserva.jsp</result>
 		</action>
-		<action name="listReservasAction"
-                class="struts.reserva.ReservaAction" method="listReserva" >
-		    <result name="success">pages/reserva.jsp</result>
-		</action>
-	</package>
+    </package>
 </struts>

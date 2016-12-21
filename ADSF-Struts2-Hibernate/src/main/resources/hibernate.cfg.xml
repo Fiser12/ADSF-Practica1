@@ -13,7 +13,7 @@
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 		<property name="use_sql_comments">true</property>
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="hibernate.model.Reserva" />
         <mapping class="hibernate.model.Habitacion" />
         <mapping class="hibernate.model.HabitacionReserva" />

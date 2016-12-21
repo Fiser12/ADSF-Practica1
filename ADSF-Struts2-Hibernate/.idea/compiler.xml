@@ -27,7 +27,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ADSF-Hotel" target="1.5" />
+      <module name="ADSF-Hotel" target="1.6" />
       <module name="Struts2Example" target="1.5" />
     </bytecodeTargetLevel>
   </component>

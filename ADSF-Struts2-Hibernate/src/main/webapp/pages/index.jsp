@@ -132,7 +132,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span>
@@ -147,12 +147,14 @@
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
         <div class="col-lg-3 pull-right" style="margin-top: 9px;">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Busca!</button>
-                </span>
-            </div><!-- /input-group -->
+            <s:form action="getReservaByIdParameter" method="POST" theme="simple">
+                <div class="input-group">
+                    <s:textfield name="buscar" cssClass="form-control"/>
+                    <span class="input-group-btn">
+                        <s:submit cssClass="btn btn-default"/>
+                    </span>
+                </div><!-- /input-group -->
+            </s:form>
         </div><!-- /.col-lg-6 -->
     </div>
 </nav>

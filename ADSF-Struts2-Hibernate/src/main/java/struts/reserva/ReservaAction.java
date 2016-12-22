@@ -15,6 +15,8 @@ public class ReservaAction extends ActionSupport
 	Reserva reserva = new Reserva();
 	List<Reserva> reservaList = new ArrayList<Reserva>();
     ReservaDAO dao = new ReservaDAO();
+    private String buscar;
+
     @Override
 
     public Reserva getModel() {
@@ -56,6 +58,22 @@ public class ReservaAction extends ActionSupport
             return "fail";
         }
     }
+    public String getReservaByIdParameter(){
+        boolean search = false;
+        listReservas();
+        for(Reserva reserva: reservaList){
+            if(reserva.getReservaId().toString().equals(buscar)){
+                this.reserva = reserva;
+                search = true;
+            }
+        }
+        if(search) {
+            return "success";
+        }else{
+            return "fail";
+        }
+
+    }
     public Reserva getReserva() {
         return reserva;
     }
@@ -71,5 +89,13 @@ public class ReservaAction extends ActionSupport
 
     public String index() {
         return "success";
+    }
+
+    public void setBuscar(String buscar) {
+        this.buscar = buscar;
+    }
+
+    public String getBuscar() {
+        return buscar;
     }
 }

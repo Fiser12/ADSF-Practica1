@@ -28,16 +28,21 @@
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
         <div class="col-lg-3 pull-right" style="margin-top: 9px;">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Busca!</button>
-                </span>
-            </div><!-- /input-group -->
+            <s:form action="getReservaByIdParameter" method="POST" theme="simple">
+                <div class="input-group">
+                    <s:textfield name="buscar" cssClass="form-control"/>
+                    <span class="input-group-btn">
+                        <s:submit cssClass="btn btn-default"/>
+                    </span>
+                </div><!-- /input-group -->
+            </s:form>
         </div><!-- /.col-lg-6 -->
     </div>
 </nav>
 <div class="container-fluid">
+    <div class="alert alert-success">
+        <strong>Reserva realizada!</strong> Gracias por confiar en nosotros, el pago se realizará en el momento de ingresar
+    </div>
     <div class="alert alert-info">
         <strong>Atención!</strong> Guarde el Identificador de la reserva para poder acceder a ella en otras ocasiones
     </div>

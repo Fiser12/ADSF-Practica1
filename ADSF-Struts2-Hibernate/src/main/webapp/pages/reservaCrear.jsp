@@ -31,12 +31,14 @@
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
         <div class="col-lg-3 pull-right" style="margin-top: 9px;">
+            <s:form action="getReservaByIdParameter" method="POST" theme="simple">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Busca!</button>
-                </span>
+                    <s:textfield name="buscar" cssClass="form-control"/>
+                    <span class="input-group-btn">
+                        <s:submit cssClass="btn btn-default"/>
+                    </span>
             </div><!-- /input-group -->
+            </s:form>
         </div><!-- /.col-lg-6 -->
     </div>
 </nav>

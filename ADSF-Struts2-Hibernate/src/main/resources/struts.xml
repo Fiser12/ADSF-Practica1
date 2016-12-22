@@ -20,5 +20,10 @@
         <action name="getReservaById" class="struts.reserva.ReservaAction" method="getReservaById" >
             <result name="success">pages/reserva.jsp</result>
         </action>
+        <action name="getReservaByIdParameter" class="struts.reserva.ReservaAction" method="getReservaByIdParameter">
+            <param name="buscar"></param>
+            <result name="success">pages/reserva.jsp</result>
+            <result name="fail">pages/reservaNotFind.jsp</result>
+        </action>
     </package>
 </struts>

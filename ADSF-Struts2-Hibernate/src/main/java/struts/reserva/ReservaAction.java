@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import hibernate.dao.ReservaDAO;
 import hibernate.model.Reserva;
+import util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,15 @@ public class ReservaAction extends ActionSupport
 
     public String execute()
     {
+        reserva.setPagado(0);
+        double precioDia;
+        if(reserva.getTipoReserva().equals("Premium"))
+            precioDia = 127;
+        else if(reserva.getTipoReserva().equals("Deluxe"))
+            precioDia = 143;
+        else
+            precioDia = 65;
+        reserva.setPrecio(precioDia* (reserva.getNumeroPersonas()/2)*Util.daysBetween(reserva.getStartTime(), reserva.getEndTime()));
         dao.addReserva(reserva);
         return "success";
     }
@@ -35,7 +45,7 @@ public class ReservaAction extends ActionSupport
         boolean search = false;
         listReservas();
         for(Reserva reserva: reservaList){
-            if(reserva.getReservaId().toString().equals("")){
+            if(reserva.getReservaId().toString().equals(reserva.getReservaId().toString())){
                 this.reserva = reserva;
                 search = true;
             }

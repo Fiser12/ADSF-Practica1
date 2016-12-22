@@ -27,7 +27,7 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
-        <div class="col-lg-3 pull-right">
+        <div class="col-lg-3 pull-right" style="margin-top: 9px;">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
                 <span class="input-group-btn">
@@ -37,6 +37,56 @@
         </div><!-- /.col-lg-6 -->
     </div>
 </nav>
-RESERVA
+<div class="container-fluid">
+    <div class="alert alert-info">
+        <strong>Atención!</strong> Guarde el Identificador de la reserva para poder acceder a ella en otras ocasiones
+    </div>
+    <h2>Comprobante de la Reserva y Desglose</h2>
+    <div class="col-md-6">
+            <div class="row form-group pull-right">
+                <label>Id de la Reserva: </label>
+                <s:property value="reserva.reservaId" />
+            </div>
+        </br>
+        </br>
+        </br>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <label>Nombre: </label>
+                    <s:property value="reserva.nombre" /> <s:property value="reserva.apellidos" />
+                </div>
+                <div class="col-md-6">
+                    <label>Teléfono: </label>
+                    <s:property value="reserva.telefono" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <label>Numero de Personas: </label>
+                    <s:property value="reserva.numeroPersonas" />
+                </div>
+                <div class="col-md-6">
+                    <label>Tipo de Servicio: </label>
+                    <s:property value="reserva.tipoReserva" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <label>Fecha de Inicio: </label>
+                    <s:date name="reserva.startTime" format="dd/MM/yyyy" />
+                </div>
+                <div class="col-md-6">
+                    <label>Fecha de Fin: </label>
+                    <s:date name="reserva.endTime" format="dd/MM/yyyy" />
+                </div>
+            </div>
+            <hr/>
+            <div class="row form-group pull-right">
+                <label>Precio final: </label>
+                <s:property value="reserva.precio" />
+            </div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -132,7 +132,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span>
@@ -146,7 +146,7 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
-        <div class="col-lg-3 pull-right">
+        <div class="col-lg-3 pull-right" style="margin-top: 9px;">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
                 <span class="input-group-btn">

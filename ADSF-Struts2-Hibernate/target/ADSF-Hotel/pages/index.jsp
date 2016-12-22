@@ -7,20 +7,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <style>.label{
-        color: #000;
-    }</style>
     <s:head />
     <style>
-        /*
-Fade content bs-carousel with hero headers
-Code snippet by maridlcrmn (Follow me on Twitter @maridlcrmn) for Bootsnipp.com
-Image credits: unsplash.com
-*/
-
-        /********************************/
-        /*       Fade Bs-carousel       */
-        /********************************/
         .fade-carousel {
             position: relative;
             height: 100vh;
@@ -144,7 +132,7 @@ Image credits: unsplash.com
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span>
@@ -158,7 +146,7 @@ Image credits: unsplash.com
         <ul class="nav navbar-nav">
             <li class="active"><a href="/reservaCrear">Crear Reserva</a></li>
         </ul>
-        <div class="col-lg-3 pull-right">
+        <div class="col-lg-3 pull-right" style="margin-top: 9px;">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Buscar tu reserva por ID">
                 <span class="input-group-btn">

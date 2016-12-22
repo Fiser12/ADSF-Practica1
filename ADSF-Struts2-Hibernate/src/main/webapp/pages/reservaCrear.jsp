@@ -37,6 +37,6 @@
         </div><!-- /.col-lg-6 -->
     </div>
 </nav>
-RESERVA
+RESERVA CREAR
 </body>
 </html>

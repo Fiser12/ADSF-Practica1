@@ -30,6 +30,22 @@ public class ReservaAction extends ActionSupport
         reservaList = dao.getStudents();
         return "success";
     }
+    public String getReservaById()
+    {
+        boolean search = false;
+        listReservas();
+        for(Reserva reserva: reservaList){
+            if(reserva.getReservaId().toString().equals("")){
+                this.reserva = reserva;
+                search = true;
+            }
+        }
+        if(search) {
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
     public Reserva getReserva() {
         return reserva;
     }
@@ -43,4 +59,7 @@ public class ReservaAction extends ActionSupport
         this.reservaList = reservas;
     }
 
+    public String index() {
+        return "success";
+    }
 }
